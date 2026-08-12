@@ -67,16 +67,23 @@
 
     <!-- NAVIGASI UTAMA -->
     <nav class="bg-gray-900 text-white shadow-md">
-        <div class="container mx-auto px-4 flex flex-wrap gap-2 py-3">
-            <button onclick="switchTab('home')" id="tabBtn-home" class="px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2">
-                <i class="fa-solid fa-newspaper"></i> <span data-lang-key="nav_home">Beranda Berita</span>
-            </button>
-            <button onclick="switchTab('editor')" id="tabBtn-editor" class="px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2">
-                <i class="fa-solid fa-pen-to-square"></i> <span data-lang-key="nav_editor">Entri & Kelola (Blogger)</span>
-            </button>
-            <button onclick="switchTab('archive')" id="tabBtn-archive" class="px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2">
-                <i class="fa-solid fa-box-archive"></i> <span data-lang-key="nav_archive">Arsip Terpisah</span>
-            </button>
+        <div class="container mx-auto px-4 flex flex-wrap justify-between items-center py-3 gap-2">
+            <div class="flex flex-wrap gap-2">
+                <button onclick="switchTab('home')" id="tabBtn-home" class="px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2">
+                    <i class="fa-solid fa-newspaper"></i> <span data-lang-key="nav_home">Beranda Berita</span>
+                </button>
+                <button onclick="switchTab('editor')" id="tabBtn-editor" class="px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i> <span data-lang-key="nav_editor">Entri & Kelola (Blogger)</span>
+                </button>
+                <button onclick="switchTab('archive')" id="tabBtn-archive" class="px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2">
+                    <i class="fa-solid fa-box-archive"></i> <span data-lang-key="nav_archive">Arsip Terpisah</span>
+                </button>
+            </div>
+            <div>
+                <button onclick="openRedaksiModal()" class="px-4 py-2 rounded-lg font-medium bg-amber-600 hover:bg-amber-700 text-white transition flex items-center gap-2 shadow">
+                    <i class="fa-solid fa-id-card"></i> <span>REDAKSI</span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -203,7 +210,7 @@
             <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
                 <div class="flex justify-between items-center border-b pb-2 dark:border-gray-700">
                     <h3 class="font-bold text-sm flex items-center gap-2 text-primary">
-                        <i class="fa-solid fa-clapperboard"></i> <span data-lang-key="ads_title">IKLAN VIDEO PENDEK </span>
+                        <i class="fa-solid fa-clapperboard"></i> <span data-lang-key="ads_title">IKLAN VIDEO PENDEK</span>
                     </h3>
                     <span class="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded">SPONSORED</span>
                 </div>
@@ -260,10 +267,7 @@
                 </div>
             </div>
 
-        </aside>
-
-    </div>
-<!-- WIDGET KATEGORI WILAYAH JATENG-DIY -->
+            <!-- WIDGET KATEGORI WILAYAH JATENG-DIY -->
             <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
                 <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2 text-primary">
                     <i class="fa-solid fa-map-pin"></i> <span>Kategori Wilayah</span>
@@ -317,7 +321,11 @@
                 </div>
             </div>
 
-    <!-- MODAL BACA BERITA -->
+        </aside>
+
+    </div>
+
+    <!-- MODAL BACA BERITA & REDAKSI -->
     <div id="readModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 max-w-2xl w-full rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
             <div class="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex flex-wrap justify-between items-center gap-4">
@@ -330,7 +338,7 @@
                     <button onclick="shareNews('fb')" class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition shadow" title="Bagikan ke Facebook">
                         <i class="fa-brands fa-facebook-f"></i>
                     </button>
-                    <button onclick="shareNews('copy')" class="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center hover:bg-gray-600 transition shadow" title="Salin Tautan (Untuk IG/Lainnya)">
+                    <button onclick="shareNews('copy')" class="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center hover:bg-gray-600 transition shadow" title="Salin Tautan">
                         <i class="fa-solid fa-link"></i>
                     </button>
                 </div>
@@ -363,34 +371,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-window.filterNews = function() {
-            const keyword = document.getElementById('searchNewsInput').value.toLowerCase();
-            const filtered = allNewsData.filter(item => item.title.toLowerCase().includes(keyword) || item.category.toLowerCase().includes(keyword));
-            renderHomeFeed(filtered);
-        }
 
-        // --- TARUH KODE DI SINI ---
-        window.filterByRegion = function(regionName) {
-            window.switchTab('home');
-            
-            const searchInput = document.getElementById('searchNewsInput');
-            searchInput.value = regionName;
-            
-            const keyword = regionName.toLowerCase();
-            const filtered = allNewsData.filter(item => 
-                item.title.toLowerCase().includes(keyword) || 
-                item.category.toLowerCase().includes(keyword) ||
-                item.content.toLowerCase().includes(keyword)
-            );
-            
-            renderHomeFeed(filtered);
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-        // -------------------------
-
-        window.openReadModal = function(id) {
-            // ... (lanjutan kode berikutnya)
-        // Konfigurasi Firebase Asli
         const firebaseConfig = {
             apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
             authDomain: "media-desa-online.firebaseapp.com",
@@ -418,7 +399,7 @@ window.filterNews = function() {
                 window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title)}`, '_blank');
             } else if (platform === 'copy') {
                 navigator.clipboard.writeText(textToShare).then(() => {
-                    alert("Tautan dan judul berita berhasil disalin! Silakan paste di Instagram, Twitter, atau aplikasi lainnya.");
+                    alert("Tautan dan judul berita berhasil disalin!");
                 }).catch(err => {
                     console.error('Gagal menyalin teks: ', err);
                 });
@@ -483,7 +464,7 @@ window.filterNews = function() {
                     <div class="col-span-2 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 p-6 rounded-xl text-center space-y-3">
                         <i class="fa-solid fa-triangle-exclamation text-amber-500 text-3xl"></i>
                         <h3 class="font-bold text-lg">Gagal Terhubung ke Database</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">Pastikan Rules di Firestore Firebase Anda sudah diubah menjadi 'allow read, write: if true;'.</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Pastikan koneksi internet atau konfigurasi Firebase Anda benar.</p>
                     </div>
                 `;
             }
@@ -633,6 +614,24 @@ window.filterNews = function() {
             renderHomeFeed(filtered);
         }
 
+        // Fungsi filter wilayah dari tombol kategori
+        window.filterByRegion = function(regionName) {
+            window.switchTab('home');
+            
+            const searchInput = document.getElementById('searchNewsInput');
+            searchInput.value = regionName;
+            
+            const keyword = regionName.toLowerCase();
+            const filtered = allNewsData.filter(item => 
+                item.title.toLowerCase().includes(keyword) || 
+                item.category.toLowerCase().includes(keyword) ||
+                item.content.toLowerCase().includes(keyword)
+            );
+            
+            renderHomeFeed(filtered);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
         window.openReadModal = function(id) {
             const item = allNewsData.find(d => d.id === id);
             if(!item) return;
@@ -652,6 +651,59 @@ window.filterNews = function() {
             document.getElementById('readModal').classList.remove('hidden');
         }
 
+        // Fungsi untuk membuka Modal Redaksi
+        window.openRedaksiModal = function() {
+            document.getElementById('modalTitle').textContent = "SUSUNAN REDAKSI & LEGALITAS";
+            document.getElementById('modalDate').textContent = "www.mediadesaonline.com";
+            document.getElementById('modalImageContainer').classList.add('hidden');
+            
+            document.getElementById('modalContent').innerHTML = `
+                <div class="space-y-4 text-sm leading-relaxed">
+                    <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-600">
+                        <p class="font-bold text-center text-primary mb-1">Diterbitkan Berdasarkan</p>
+                        <p class="text-center">Undang-Undang PERS Nomor 40 Tahun 1999<br><strong>www.mediadesaonline.com</strong></p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-base text-primary border-b pb-1 mb-2">BADAN HUKUM</h4>
+                        <p><strong>PT. WEB DIGITAL MARKETING</strong><br>
+                        Jl. Kaliurang No. 10 RT.12 RW.03 Sinduharjo, Ngaglik, Kab. Sleman, D.I. Yogyakarta</p>
+                        <p class="mt-1"><strong>SK Menteri Hukum dan HAM Republik Indonesia</strong><br>
+                        Nomor : AHU-013070.AH.01.30 Tahun 2023 Tgl.: 16 Februari 2023<br>
+                        Gedung Sinar Kasih Lt.5, Jl. Dewi Sartika No. 136-D, Jakarta Timur 13630 – Indonesia</p>
+                        <p class="mt-1"><strong>EMAIL REDAKSI:</strong> mediadesaonline@gmail.com</p>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-base text-primary border-b pb-1 mb-2">STRUKTUR ORGANISASI</h4>
+                        <ul class="space-y-1">
+                            <li><strong>PENDIRI:</strong> Latif Safruddin, SE</li>
+                            <li><strong>PEMBINA:</strong> Mila Jamilaturrofiah, S.Art</li>
+                            <li><strong>DEWAN PENASEHAT HUKUM:</strong> Zainal Abidin, M.Hum | Rossi Zaenal, SH</li>
+                            <li><strong>PEMIMPIN UMUM:</strong> Latif Safruddin, SE</li>
+                            <li><strong>PEMIMPIN REDAKSI / PENANGGUNG JAWAB:</strong> Latif Safruddin, SE</li>
+                            <li><strong>REDAKTUR PELAKSANA:</strong> Tya Zaenal, S.Pd | Kamal Zaenal, S.Komp</li>
+                            <li><strong>SEKRETARIS:</strong> Aisyah Naziya Almahyra</li>
+                            <li><strong>BENDAHARA:</strong> Milla</li>
+                            <li><strong>IT & INFRASTRUKTUR:</strong> Cello Audric Adinata</li>
+                            <li><strong>IT CREATOR:</strong> Aisyah</li>
+                            <li><strong>KONTRIBUTOR JEPARA:</strong> Zakiyah Noor, S.Pd | Noor Aizatul Munawaroh, S.Ag | Syaifurohman Chilmy, S.Ag</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-600">
+                        <h4 class="font-bold text-base text-primary mb-1">ALAMAT REDAKSI</h4>
+                        <p><strong>PT WEB DIGITAL MARKETING</strong><br>
+                        Jl. Kaliurang KM 10, Sleman, D.I. Yogyakarta<br>
+                        Telp. 08551236277<br>
+                        Email: mediadesaonline@gmail.com</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('readModal').classList.remove('hidden');
+        }
+
         window.closeReadModal = function() {
             document.getElementById('readModal').classList.add('hidden');
         }
@@ -662,7 +714,6 @@ window.filterNews = function() {
 
     <!-- UI INTERAKTIF (Tab, Dark Mode, Multi-Bahasa) -->
     <script>
-        // Logika Perpindahan Tab & Password Admin
         window.switchTab = function(tabName) {
             if (tabName === 'editor') {
                 const password = prompt("Masukkan password admin untuk mengelola berita:");
@@ -681,7 +732,6 @@ window.filterNews = function() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // Mode Gelap/Terang
         function toggleDarkMode() {
             const html = document.documentElement;
             const icon = document.getElementById('themeIcon');
@@ -701,7 +751,6 @@ window.filterNews = function() {
             document.getElementById('themeIcon').className = "fa-solid fa-sun";
         }
 
-        // Multi Bahasa
         const translations = {
             id: {
                 sub_brand: "SELALU ADA YANG BARU",
@@ -722,7 +771,7 @@ window.filterNews = function() {
                 manage_title: "Kelola Entri Berita (Draf & Terbit)",
                 archive_page_title: "Arsip Berita Desa Terpadu",
                 archive_page_desc: "Seluruh riwayat publikasi berita desa dari berbagai wilayah Jateng dan DIY tersimpan rapi di sini.",
-                ads_title: "IKLAN VIDEO PENDEK DESA",
+                ads_title: "IKLAN VIDEO PENDEK",
                 contact_title: "Lokasi & Kontak Resmi",
                 office_label: "Kantor Sekretariat:",
                 wa_label: "Layanan WhatsApp Center:",
@@ -748,7 +797,7 @@ window.filterNews = function() {
                 manage_title: "Kelola Cathetan Pawarta",
                 archive_page_title: "Arsip Pawarta Desa",
                 archive_page_desc: "Sadaya riwayat publikasi pawarta desa saking wewengkon Jateng lan DIY.",
-                ads_title: "IKLAN VIDEO PENDEK DESA",
+                ads_title: "IKLAN VIDEO PENDEK",
                 contact_title: "Lokasi & Kontak Resmi",
                 office_label: "Kantor Sekretariat:",
                 wa_label: "Layanan WhatsApp:",
