@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mediadesaonline JATENG-DIY</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#16a34a', // Hijau Desa
+                        secondary: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col font-sans">
+
+    <!-- HEADER DENGAN LOGO, TEKS UTAMA, & KONTROL -->
+    <header class="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-50 border-b border-gray-200 dark:border-gray-700">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- LOGO & TEKS UTAMA -->
+            <a href="#" onclick="switchTab('home')" class="flex items-center gap-3.5 group">
+                <img src="logo.png" alt="Logo" class="h-14 md:h-16 w-auto object-contain" onerror="this.style.display='none';">
+                <div class="flex flex-col">
+                    <div class="text-lg md:text-2xl font-black tracking-tight text-gray-900 dark:text-white flex flex-wrap items-center gap-2">
+                        <span>MEDIA DESA ONLINE</span>
+                        <span class="text-xs bg-primary text-white px-2 py-0.5 rounded-full font-bold">JATENG-DIY</span>
+                    </div>
+                    <span class="text-xs md:text-sm font-extrabold text-primary tracking-wider uppercase" data-lang-key="sub_brand">SELALU ADA YANG BARU</span>
+                </div>
+            </a>
+
+            <!-- KONTROL BAHASA & DARK MODE -->
+            <div class="flex items-center gap-4">
+                <select id="languageSelect" onchange="changeLanguage(this.value)" class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-sm rounded-lg px-3 py-1.5 focus:ring-primary focus:border-primary">
+                    <option value="id">Bahasa Indonesia</option>
+                    <option value="jv">Basa Jawa</option>
+                    <option value="en">English</option>
+                </select>
+
+                <button onclick="toggleDarkMode()" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition" title="Ganti Mode Gelap/Terang">
+                    <i id="themeIcon" class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- TEKS BERJALAN BESAR (MARQUEE) -->
+    <div class="bg-primary text-white py-2 px-4 shadow-inner overflow-hidden whitespace-nowrap flex items-center">
+        <div class="bg-green-800 px-3 py-1 rounded text-xs font-bold uppercase mr-3 tracking-wider flex items-center gap-1 shadow">
+            <i class="fa-solid fa-bullhorn"></i> <span data-lang-key="ticker_title">INFO TERBARU</span>
+        </div>
+        <marquee class="text-sm font-medium" scrollamount="6">
+            Selamat datang di portal resmi mediadesaonline JATENG-DIY. Selalu Ada Yang Baru! Berita, Inspirasi, Kolaborasi, Pembangunan, dan UMKM Desa Terkini se-Jawa Tengah & D.I. Yogyakarta. Layanan WhatsApp Center: 08551236277.
+        </marquee>
+    </div>
+
+    <!-- NAVIGASI UTAMA -->
+    <nav class="bg-gray-900 text-white shadow-md">
+        <div class="container mx-auto px-4 flex flex-wrap gap-2 py-3">
+            <button onclick="switchTab('home')" id="tabBtn-home" class="px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2">
+                <i class="fa-solid fa-newspaper"></i> <span data-lang-key="nav_home">Beranda Berita</span>
+            </button>
+            <button onclick="switchTab('editor')" id="tabBtn-editor" class="px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2">
+                <i class="fa-solid fa-pen-to-square"></i> <span data-lang-key="nav_editor">Entri & Kelola (Blogger)</span>
+            </button>
+            <button onclick="switchTab('archive')" id="tabBtn-archive" class="px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2">
+                <i class="fa-solid fa-box-archive"></i> <span data-lang-key="nav_archive">Arsip Terpisah</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- KONTEN UTAMA HALAMAN -->
+    <div class="container mx-auto px-4 py-8 flex-grow grid grid-cols-1 lg:grid-cols-4 gap-8">
+        
+        <!-- KOLOM UTAMA -->
+        <main class="lg:col-span-3 space-y-6">
+            
+            <!-- TAB 1: BERANDA BERITA -->
+            <div id="view-home" class="space-y-6">
+                <!-- HERO BANNER -->
+                <div class="bg-gradient-to-r from-blue-900 via-indigo-800 to-primary text-white p-6 md:p-8 rounded-2xl shadow-xl space-y-4 relative overflow-hidden">
+                    <div class="absolute right-0 bottom-0 opacity-10 translate-x-10 translate-y-10">
+                        <i class="fa-solid fa-landmark text-9xl"></i>
+                    </div>
+                    <span class="bg-yellow-500 text-gray-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1">
+                        <i class="fa-solid fa-star"></i> <span data-lang-key="hero_badge">PORTAL RESMI JATENG & DIY</span>
+                    </span>
+                    <h2 class="text-2xl md:text-4xl font-black tracking-tight">Dari Desa, Untuk Negeri <span class="text-yellow-400">Jawa Tengah & D.I. Yogyakarta</span></h2>
+                    <p class="text-sm md:text-base text-gray-200 max-w-2xl" data-lang-key="hero_desc">
+                        Pusat informasi pembangunan, administrasi, wisata budaya (Borobudur & Tugu), serta keunggulan UMKM desa dari seluruh kabupaten/kota se-Jateng dan DIY.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="bg-white/20 px-3 py-1 rounded-lg text-xs font-medium">BERITA</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-lg text-xs font-medium">INSPIRASI</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-lg text-xs font-medium">KOLABORASI</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-lg text-xs font-medium">PEMBANGUNAN</span>
+                        <span class="bg-white/20 px-3 py-1 rounded-lg text-xs font-medium">UMKM</span>
+                    </div>
+                </div>
+
+                <!-- FILTER & PENCARIAN -->
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center gap-2 w-full md:w-auto">
+                        <h3 class="font-bold text-lg flex items-center gap-2">
+                            <i class="fa-solid fa-earth-americas text-primary"></i> <span data-lang-key="latest_news_title">Berita Desa Terkini</span>
+                        </h3>
+                    </div>
+                    <div class="w-full md:w-72">
+                        <input type="text" id="searchNewsInput" oninput="filterNews()" placeholder="Cari berita atau wilayah..." class="w-full px-3 py-2 text-sm border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                </div>
+
+                <!-- FEED BERITA -->
+                <div id="newsFeed" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <p class="text-gray-500 text-center py-8 col-span-2" data-lang-key="loading">Memuat data berita dari Firebase...</p>
+                </div>
+            </div>
+
+            <!-- TAB 2: ENTRI & KELOLA BERITA (BLOGGER STYLE) -->
+            <div id="view-editor" class="hidden space-y-6">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-4">
+                    <div class="border-b pb-3 dark:border-gray-700 flex justify-between items-center">
+                        <h2 class="text-xl font-bold flex items-center gap-2 text-primary">
+                            <i class="fa-solid fa-pen-nib"></i> <span id="formHeaderTitle" data-lang-key="form_new_title">Entri Berita Baru (Blogger Style)</span>
+                        </h2>
+                        <button onclick="resetNewsForm()" id="cancelEditBtn" class="hidden text-xs bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded transition">Batal Edit</button>
+                    </div>
+
+                    <form id="newsForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                        <input type="hidden" id="editDocId">
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-lang-key="lbl_title">Judul Berita</label>
+                            <input type="text" id="newsTitle" required placeholder="Masukkan judul berita utama desa..." class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-lang-key="lbl_category">Kategori / Wilayah</label>
+                                <input type="text" id="newsCategory" required placeholder="Contoh: Sleman / Kab. Banyumas / UMKM" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-1" data-lang-key="lbl_image">URL Gambar Utama</label>
+                                <input type="url" id="newsImage" placeholder="https://example.com/gambar.jpg" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1" data-lang-key="lbl_content">Isi Berita Lengkap</label>
+                            <textarea id="newsContent" rows="6" required placeholder="Tulis narasi berita secara lengkap di sini..." class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                        </div>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <button type="button" onclick="saveNewsStatus('draft')" class="bg-amber-600 hover:bg-amber-700 text-white font-medium px-5 py-2.5 rounded-lg transition flex items-center gap-2">
+                                <i class="fa-solid fa-floppy-disk"></i> <span data-lang-key="btn_save_draft">Simpan Draf</span>
+                            </button>
+                            <button type="submit" class="bg-primary hover:bg-green-700 text-white font-medium px-6 py-2.5 rounded-lg transition flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> <span data-lang-key="btn_publish">Publikasikan Berita</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- DAFTAR KELOLA BERITA -->
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-4">
+                    <h3 class="font-bold text-lg border-b pb-2 dark:border-gray-700 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-primary"></i> <span data-lang-key="manage_title">Kelola Entri Berita (Draf & Terbitan)</span>
+                    </h3>
+                    <div id="manageNewsList" class="space-y-3">
+                        <p class="text-gray-500 text-center py-4">Memuat data kelola...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: ARSIP TERPISAH -->
+            <div id="view-archive" class="hidden space-y-6">
+                <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-4">
+                    <div class="border-b pb-3 dark:border-gray-700">
+                        <h2 class="text-xl font-bold flex items-center gap-2 text-primary">
+                            <i class="fa-solid fa-box-archive"></i> <span data-lang-key="archive_page_title">Arsip Berita Desa Terpadu</span>
+                        </h2>
+                        <p class="text-xs text-gray-500 mt-1" data-lang-key="archive_page_desc">Seluruh riwayat publikasi berita desa dari berbagai wilayah Jateng dan DIY tersimpan rapi di sini.</p>
+                    </div>
+                    <div id="archiveNewsList" class="space-y-4">
+                        <p class="text-gray-500 text-center py-8">Memuat arsip berita...</p>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- SIDEBAR SAMPING -->
+        <aside class="space-y-6">
+            
+            <!-- WIDGET IKLAN VIDEO PENDEK -->
+            <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
+                <div class="flex justify-between items-center border-b pb-2 dark:border-gray-700">
+                    <h3 class="font-bold text-sm flex items-center gap-2 text-primary">
+                        <i class="fa-solid fa-clapperboard"></i> <span data-lang-key="ads_title">IKLAN VIDEO PENDEK DESA</span>
+                    </h3>
+                    <span class="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded">SPONSORED</span>
+                </div>
+                <div class="relative bg-black rounded-lg overflow-hidden shadow aspect-[9/16] flex items-center justify-center group">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 flex flex-col justify-between p-4 text-white">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="bg-primary/80 px-2 py-0.5 rounded font-bold">14.8K Views</span>
+                            <i class="fa-solid fa-volume-high text-white/80"></i>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded uppercase">UMKM Unggulan Desa</span>
+                            <h4 class="font-bold text-sm leading-snug">Sentra Kerajinan Bambu & Batik Lokal Jateng-DIY</h4>
+                            <p class="text-[11px] text-gray-300">Dukung produk lokal berkualitas tinggi langsung dari perajin desa.</p>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition bg-black/40">
+                        <button onclick="alert('Memutar video pendek promosi UMKM desa...')" class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg text-lg">
+                            <i class="fa-solid fa-play ml-0.5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIDGET LOKASI & KONTAK -->
+            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
+                <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2">
+                    <i class="fa-solid fa-map-location-dot text-primary"></i> <span data-lang-key="contact_title">Lokasi & Kontak Resmi</span>
+                </h3>
+                <div class="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                    <div class="flex items-start gap-2.5">
+                        <i class="fa-solid fa-location-dot text-primary mt-1"></i>
+                        <p><strong class="block text-gray-800 dark:text-white" data-lang-key="office_label">Kantor Sekretariat:</strong> Jl. Kaliurang KM 10, Kabupaten Sleman, D.I. Yogyakarta</p>
+                    </div>
+                    <div class="flex items-center gap-2.5">
+                        <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i>
+                        <div>
+                            <span class="block text-xs text-gray-400" data-lang-key="wa_label">Layanan WhatsApp Center:</span>
+                            <a href="https://wa.me/628551236277" target="_blank" class="font-bold text-primary hover:underline">08551236277</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIDGET MEDIA SOSIAL -->
+            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
+                <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2">
+                    <i class="fa-solid fa-share-nodes text-primary"></i> <span data-lang-key="social_title">Media Sosial Resmi</span>
+                </h3>
+                <div class="flex flex-col gap-2.5">
+                    <a href="https://www.youtube.com/@mediadesaonline2024" target="_blank" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm">
+                        <i class="fa-brands fa-youtube text-red-600 text-lg w-6"></i> <span>@mediadesaonline2024</span>
+                    </a>
+                    <a href="https://www.facebook.com/latif.mediadesa" target="_blank" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm">
+                        <i class="fa-brands fa-facebook text-blue-600 text-lg w-6"></i> <span>latif.mediadesa</span>
+                    </a>
+                    <a href="https://www.instagram.com/mediadesaonline/" target="_blank" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm">
+                        <i class="fa-brands fa-instagram text-pink-600 text-lg w-6"></i> <span>@mediadesaonline</span>
+                    </a>
+                </div>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- MODAL BACA BERITA -->
+    <div id="readModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 max-w-2xl w-full rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900">
+                <span id="modalCategory" class="bg-green-100 text-primary px-2.5 py-1 rounded text-xs font-bold uppercase">Kategori</span>
+                <button onclick="closeReadModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xl font-bold px-2">&times;</button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4">
+                <h2 id="modalTitle" class="text-2xl font-black">Judul Berita</h2>
+                <p id="modalDate" class="text-xs text-gray-500">Tanggal publikasi</p>
+                <div id="modalImageContainer" class="hidden">
+                    <img id="modalImage" src="" alt="Gambar Berita" class="w-full h-64 object-cover rounded-xl shadow">
+                </div>
+                <div id="modalContent" class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line text-base"></div>
+            </div>
+            <div class="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex justify-end">
+                <button onclick="closeReadModal()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-5 py-2 rounded-lg font-medium text-sm transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-6 text-center text-sm text-gray-500 dark:text-gray-400">
+        <div class="container mx-auto px-4 space-y-2">
+            <p>&copy; 2026 mediadesaonline JATENG-DIY. All Rights Reserved. Selalu Ada Yang Baru.</p>
+            <p class="text-xs">Dari Desa, Untuk Negeri | Sekretariat: Jl. Kaliurang KM 10, Sleman, D.I. Yogyakarta</p>
+        </div>
+    </footer>
+
+    <!-- FIREBASE & LOGIKA APLIKASI -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "ISI_API_KEY_ANDA",
+            authDomain: "PROJECT_ID.firebaseapp.com",
+            projectId: "PROJECT_ID",
+            storageBucket: "PROJECT_ID.appspot.com",
+            messagingSenderId: "SENDER_ID",
+            appId: "APP_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let allNewsData = [];
+
+        window.handleFormSubmit = async function(event) {
+            event.preventDefault();
+            submitNewsData('published');
+        }
+
+        window.saveNewsStatus = async function(statusType) {
+            submitNewsData(statusType);
+        }
+
+        async function submitNewsData(status) {
+            const editId = document.getElementById('editDocId').value;
+            const title = document.getElementById('newsTitle').value;
+            const category = document.getElementById('newsCategory').value;
+            const image = document.getElementById('newsImage').value || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600';
+            const content = document.getElementById('newsContent').value;
+
+            if(!title || !category || !content) {
+                alert("Harap isi Judul, Kategori, dan Isi Berita!");
+                return;
+            }
+
+            try {
+                if(editId) {
+                    await updateDoc(doc(db, "posts", editId), {
+                        title, category, image, content, status, updatedAt: serverTimestamp()
+                    });
+                    alert(status === 'published' ? "Berita berhasil diperbarui & dipublikasikan!" : "Draf berita berhasil diperbarui!");
+                } else {
+                    await addDoc(collection(db, "posts"), {
+                        title, category, image, content, status, createdAt: serverTimestamp()
+                    });
+                    alert(status === 'published' ? "Berita berhasil diterbitkan!" : "Draf berita berhasil disimpan!");
+                }
+                
+                resetNewsForm();
+                fetchNewsFromFirebase();
+                switchTab('home');
+            } catch (e) {
+                console.error("Gagal menyimpan berita: ", e);
+                alert("Terjadi kesalahan saat menyimpan ke Firebase.");
+            }
+        }
+
+        window.fetchNewsFromFirebase = async function() {
+            try {
+                const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                allNewsData = [];
+                querySnapshot.forEach((docSnap) => {
+                    allNewsData.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                renderUI();
+            } catch (e) {
+                console.error("Gagal memuat berita: ", e);
+                document.getElementById('newsFeed').innerHTML = `
+                    <div class="col-span-2 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 p-6 rounded-xl text-center space-y-3">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-500 text-3xl"></i>
+                        <h3 class="font-bold text-lg">Konfigurasi Firebase Diperlukan</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Masukkan konfigurasi Firebase Anda pada skrip agar data tersimpan secara cloud dan sinkron di semua perangkat.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function renderUI() {
+            renderHomeFeed(allNewsData);
+            renderManageList(allNewsData);
+            renderArchiveList(allNewsData);
+        }
+
+        function renderHomeFeed(data) {
+            const feed = document.getElementById('newsFeed');
+            const published = data.filter(item => item.status === 'published');
+            
+            if(published.length === 0) {
+                feed.innerHTML = `<p class="text-gray-500 text-center py-8 col-span-2">Belum ada berita yang dipublikasikan.</p>`;
+                return;
+            }
+
+            feed.innerHTML = "";
+            published.forEach(item => {
+                const dateStr = item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('id-ID', {dateStyle: 'medium'}) : 'Baru saja';
+                feed.innerHTML += `
+                    <article class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 flex flex-col justify-between hover:shadow-lg transition">
+                        <div>
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-48 object-cover">
+                            <div class="p-5 space-y-3">
+                                <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                    <span class="bg-green-100 dark:bg-green-900 text-primary dark:text-green-300 px-2.5 py-0.5 rounded font-bold">${item.category}</span>
+                                    <span>${dateStr}</span>
+                                </div>
+                                <h3 class="text-lg font-bold line-clamp-2">${item.title}</h3>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm line-clamp-3">${item.content}</p>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-0">
+                            <button onclick="openReadModal('${item.id}')" class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white text-gray-800 dark:text-gray-200 py-2 rounded-lg text-sm font-medium transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-book-open"></i> Baca Selengkapnya
+                            </button>
+                        </div>
+                    </article>
+                `;
+            });
+        }
+
+        function renderManageList(data) {
+            const list = document.getElementById('manageNewsList');
+            if(data.length === 0) {
+                list.innerHTML = `<p class="text-gray-500 text-center py-4">Belum ada entri draf atau berita.</p>`;
+                return;
+            }
+
+            list.innerHTML = "";
+            data.forEach(item => {
+                const isDraft = item.status === 'draft';
+                list.innerHTML += `
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-600 gap-4">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 text-xs rounded font-bold ${isDraft ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-primary'}">${isDraft ? 'DRAF' : 'TERBIT'}</span>
+                                <span class="text-xs text-gray-500">${item.category}</span>
+                            </div>
+                            <h4 class="font-bold text-base">${item.title}</h4>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="editNews('${item.id}')" class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1">
+                                <i class="fa-solid fa-pen"></i> Edit
+                            </button>
+                            <button onclick="deleteNews('${item.id}')" class="bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg font-medium transition flex items-center gap-1">
+                                <i class="fa-solid fa-trash"></i> Hapus
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderArchiveList(data) {
+            const archiveList = document.getElementById('archiveNewsList');
+            const published = data.filter(item => item.status === 'published');
+            
+            if(published.length === 0) {
+                archiveList.innerHTML = `<p class="text-gray-500 text-center py-8">Belum ada arsip berita tersedia.</p>`;
+                return;
+            }
+
+            archiveList.innerHTML = "";
+            published.forEach(item => {
+                const dateStr = item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('id-ID', {dateStyle: 'full'}) : 'Baru saja';
+                archiveList.innerHTML += `
+                    <div class="p-4 bg-gray-50 dark:bg-gray-700/40 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2 text-xs text-gray-500">
+                                <span class="bg-primary/10 text-primary px-2 py-0.5 rounded font-bold">${item.category}</span>
+                                <span><i class="fa-regular fa-calendar"></i> ${dateStr}</span>
+                            </div>
+                            <h4 class="font-bold text-lg">${item.title}</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-1">${item.content}</p>
+                        </div>
+                        <button onclick="openReadModal('${item.id}')" class="whitespace-nowrap bg-primary hover:bg-green-700 text-white text-xs px-4 py-2 rounded-lg font-medium transition">
+                            Baca Artikel
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        window.editNews = function(id) {
+            const item = allNewsData.find(d => d.id === id);
+            if(!item) return;
+
+            document.getElementById('editDocId').value = item.id;
+            document.getElementById('newsTitle').value = item.title;
+            document.getElementById('newsCategory').value = item.category;
+            document.getElementById('newsImage').value = item.image;
+            document.getElementById('newsContent').value = item.content;
+            document.getElementById('formHeaderTitle').textContent = "Edit Entri Berita";
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+
+            switchTab('editor');
+        }
+
+        window.resetNewsForm = function() {
+            document.getElementById('newsForm').reset();
+            document.getElementById('editDocId').value = "";
+            document.getElementById('formHeaderTitle').textContent = "Entri Berita Baru (Blogger Style)";
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+
+        window.deleteNews = async function(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus berita ini secara permanen dari cloud?")) {
+                try {
+                    await deleteDoc(doc(db, "posts", id));
+                    alert("Berita berhasil dihapus.");
+                    fetchNewsFromFirebase();
+                } catch (e) {
+                    console.error("Gagal menghapus: ", e);
+                    alert("Gagal menghapus berita.");
+                }
+            }
+        }
+
+        window.filterNews = function() {
+            const keyword = document.getElementById('searchNewsInput').value.toLowerCase();
+            const filtered = allNewsData.filter(item => item.title.toLowerCase().includes(keyword) || item.category.toLowerCase().includes(keyword));
+            renderHomeFeed(filtered);
+        }
+
+        window.openReadModal = function(id) {
+            const item = allNewsData.find(d => d.id === id);
+            if(!item) return;
+
+            document.getElementById('modalCategory').textContent = item.category;
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalDate').textContent = item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('id-ID', {dateStyle: 'full'}) : 'Baru saja';
+            document.getElementById('modalContent').textContent = item.content;
+            
+            const imgContainer = document.getElementById('modalImageContainer');
+            if(item.image) {
+                document.getElementById('modalImage').src = item.image;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+
+            document.getElementById('readModal').classList.remove('hidden');
+        }
+
+        window.closeReadModal = function() {
+            document.getElementById('readModal').classList.add('hidden');
+        }
+
+        fetchNewsFromFirebase();
+    </script>
+
+    <!-- UI INTERAKTIF (Tab, Dark Mode, Multi-Bahasa) -->
+    <script>
+        window.switchTab = function(tabName) {
+            ['home', 'editor', 'archive'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                document.getElementById(`tabBtn-${t}`).className = "px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2";
+            });
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            document.getElementById(`tabBtn-${tabName}`).className = "px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2";
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                icon.className = "fa-solid fa-moon";
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                icon.className = "fa-solid fa-sun";
+            }
+        }
+
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            document.getElementById('themeIcon').className = "fa-solid fa-sun";
+        }
+
+        const translations = {
+            id: {
+                sub_brand: "SELALU ADA YANG BARU",
+                ticker_title: "INFO TERBARU",
+                nav_home: "Beranda Berita",
+                nav_editor: "Entri & Kelola (Blogger)",
+                nav_archive: "Arsip Terpisah",
+                hero_badge: "PORTAL RESMI JATENG & DIY",
+                hero_desc: "Pusat informasi pembangunan, administrasi, wisata budaya (Borobudur & Tugu), serta keunggulan UMKM desa dari seluruh kabupaten/kota se-Jateng dan DIY.",
+                latest_news_title: "Berita Desa Terkini",
+                form_new_title: "Entri Berita Baru (Blogger Style)",
+                lbl_title: "Judul Berita",
+                lbl_category: "Kategori / Wilayah",
+                lbl_image: "URL Gambar Utama",
+                lbl_content: "Isi Berita Lengkap",
+                btn_save_draft: "Simpan Draf",
+                btn_publish: "Publikasikan Berita",
+                manage_title: "Kelola Entri Berita (Draf & Terbit)",
+                archive_page_title: "Arsip Berita Desa Terpadu",
+                archive_page_desc: "Seluruh riwayat publikasi berita desa dari berbagai wilayah Jateng dan DIY tersimpan rapi di sini.",
+                ads_title: "IKLAN VIDEO PENDEK DESA",
+                contact_title: "Lokasi & Kontak Resmi",
+                office_label: "Kantor Sekretariat:",
+                wa_label: "Layanan WhatsApp Center:",
+                social_title: "Media Sosial Resmi",
+                loading: "Memuat data berita dari Firebase..."
+            },
+            jv: {
+                sub_brand: "SELALU ADA YANG BARU",
+                ticker_title: "INFO ANYAR",
+                nav_home: "Beranda Pawarta",
+                nav_editor: "Ngetri & Kelola (Blogger)",
+                nav_archive: "Arsip Pisah",
+                hero_badge: "PORTAL RESMI JATENG & DIY",
+                hero_desc: "Pusat informasi pembangunan, administrasi, wisata budaya, sarta keunggulan UMKM desa saking sakabehing kabupaten/kutha se-Jateng lan DIY.",
+                latest_news_title: "Pawarta Desa Anyar",
+                form_new_title: "Cathetan Pawarta Anyar (Blogger Style)",
+                lbl_title: "Irah-irahan Pawarta",
+                lbl_category: "Kategori / Wilayah",
+                lbl_image: "URL Gambar Utama",
+                lbl_content: "Isi Pawarta",
+                btn_save_draft: "Simpen Draf",
+                btn_publish: "Terbitake Pawarta",
+                manage_title: "Kelola Cathetan Pawarta",
+                archive_page_title: "Arsip Pawarta Desa",
+                archive_page_desc: "Sadaya riwayat publikasi pawarta desa saking wewengkon Jateng lan DIY.",
+                ads_title: "IKLAN VIDEO PENDEK DESA",
+                contact_title: "Lokasi & Kontak Resmi",
+                office_label: "Kantor Sekretariat:",
+                wa_label: "Layanan WhatsApp:",
+                social_title: "Media Sosial Resmi",
+                loading: "Ngolah data pawarta saking Firebase..."
+            },
+            en: {
+                sub_brand: "ALWAYS SOMETHING NEW",
+                ticker_title: "LATEST INFO",
+                nav_home: "News Home",
+                nav_editor: "Entry & Manage (Blogger)",
+                nav_archive: "Separate Archive",
+                hero_badge: "OFFICIAL PORTAL CENTRAL JAVA & DIY",
+                hero_desc: "Center of development information, administration, cultural tourism, and village MSMEs from regencies across Central Java and DIY.",
+                latest_news_title: "Latest Village News",
+                form_new_title: "New News Entry (Blogger Style)",
+                lbl_title: "News Title",
+                lbl_category: "Category / Region",
+                lbl_image: "Main Image URL",
+                lbl_content: "Full News Content",
+                btn_save_draft: "Save Draft",
+                btn_publish: "Publish News",
+                manage_title: "Manage News Entries (Drafts & Published)",
+                archive_page_title: "Integrated Village News Archive",
+                archive_page_desc: "All historical village news publications from Central Java and DIY are stored here.",
+                ads_title: "VILLAGE SHORT VIDEO ADS",
+                contact_title: "Location & Official Contact",
+                office_label: "Secretariat Office:",
+                wa_label: "WhatsApp Center:",
+                social_title: "Official Social Media",
+                loading: "Loading news data from Firebase..."
+            }
+        };
+
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+            localStorage.setItem('preferred_lang', lang);
+        }
+
+        const savedLang = localStorage.getItem('preferred_lang') || 'id';
+        document.getElementById('languageSelect').value = savedLang;
+        changeLanguage(savedLang);
+    </script>
+</body>
+</html>
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
+  authDomain: "media-desa-online.firebaseapp.com",
+  projectId: "media-desa-online",
+  storageBucket: "media-desa-online.firebasestorage.app",
+  messagingSenderId: "824125231737",
+  appId: "1:824125231737:web:529291c09037322e593aa8",
+  measurementId: "G-6VH2G8Q8VP"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
