@@ -133,7 +133,7 @@
                     <p class="text-gray-500 text-center py-8 col-span-2">Memuat data berita dari Firebase...</p>
                 </div>
 
-                <!-- ARSIP BERITA PILIHAN (6 KOTAK KECIL DI BAWAH BERITA UTAMA) -->
+                <!-- ARSIP BERITA PILIHAN -->
                 <div class="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 dark:text-white">
                         <i class="fa-solid fa-box-archive text-primary"></i> <span>Arsip Berita Pilihan</span>
@@ -293,16 +293,6 @@
                 </div>
             </div>
 
-            <!-- WIDGET BERITA POPULER -->
-            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
-                <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2 text-primary">
-                    <i class="fa-solid fa-fire"></i> <span>Berita Populer</span>
-                </h3>
-                <div id="popularNewsList" class="space-y-3">
-                    <p class="text-xs text-gray-500">Memuat berita populer...</p>
-                </div>
-            </div>
-
         </aside>
 
     </div>
@@ -346,16 +336,15 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // ==========================================
-        // GANTI DENGAN KONFIGURASI FIREBASE ANDA SENDIRI
-        // ==========================================
+        // Konfigurasi Firebase Pengguna
         const firebaseConfig = {
-            apiKey: "ISI_API_KEY_ANDA",
-            authDomain: "ISI_AUTH_DOMAIN_ANDA",
-            projectId: "ISI_PROJECT_ID_ANDA",
-            storageBucket: "ISI_STORAGE_BUCKET_ANDA",
-            messagingSenderId: "ISI_MESSAGING_SENDER_ID_ANDA",
-            appId: "ISI_APP_ID_ANDA"
+            apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
+            authDomain: "media-desa-online.firebaseapp.com",
+            projectId: "media-desa-online",
+            storageBucket: "media-desa-online.firebasestorage.app",
+            messagingSenderId: "824125231737",
+            appId: "1:824125231737:web:529291c09037322e593aa8",
+            measurementId: "G-6VH2G8Q8VP"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -400,7 +389,6 @@
             }
         }
 
-        // Ambil Data Berita dari Firestore
         async function fetchNews() {
             try {
                 const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
@@ -413,24 +401,21 @@
                 renderManageList(allNews);
             } catch (error) {
                 console.error("Gagal mengambil data: ", error);
-                document.getElementById('newsFeed').innerHTML = `<p class="text-red-500 text-center col-span-2">Gagal memuat berita dari Firebase. Periksa konfigurasi Anda.</p>`;
+                document.getElementById('newsFeed').innerHTML = `<p class="text-red-500 text-center col-span-2">Gagal memuat berita dari Firebase. Periksa aturan keamanan Firestore Anda (Rules).</p>`;
             }
         }
 
         function renderNewsUI(data) {
             const newsFeed = document.getElementById('newsFeed');
             const archiveFeed = document.getElementById('archiveFeed');
-            
-            // Filter hanya yang berstatus 'published' (atau tampilkan semua jika status belum diatur)
             const publishedNews = data.filter(item => !item.status || item.status === 'published');
 
             if(publishedNews.length === 0) {
-                newsFeed.innerHTML = `<p class="text-gray-500 text-center col-span-2 py-8">Belum ada berita terpublikasi.</p>`;
+                newsFeed.innerHTML = `<p class="text-gray-500 text-center col-span-2 py-8">Belum ada berita terpublikasi. Silakan tambahkan berita melalui menu <b>Entri & Kelola</b>.</p>`;
                 archiveFeed.innerHTML = `<p class="text-gray-500 text-sm col-span-3 text-center py-4">Belum ada arsip.</p>`;
                 return;
             }
 
-            // Berita Utama (Ambil 2 berita teratas)
             const mainNews = publishedNews.slice(0, 2);
             newsFeed.innerHTML = mainNews.map(item => `
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 flex flex-col justify-between hover:shadow-lg transition">
@@ -449,7 +434,6 @@
                 </div>
             `).join('');
 
-            // Arsip Berita Pilihan (Ambil 6 berita berikutnya, index 2 sampai 8)
             const archiveData = publishedNews.slice(2, 8);
             if(archiveData.length === 0) {
                 archiveFeed.innerHTML = `<p class="text-gray-500 text-sm col-span-3 text-center py-4">Belum ada arsip pilihan tambahan.</p>`;
@@ -537,7 +521,6 @@
             window.scrollTo({top: 300, behavior: 'smooth'});
         }
 
-        // Formulir Editor / Blogger Style
         window.handleFormSubmit = function(e) {
             e.preventDefault();
             saveNewsStatus('published');
@@ -557,13 +540,11 @@
 
             try {
                 if(docId) {
-                    // Update data
                     await updateDoc(doc(db, "news", docId), {
                         title, category, image, content, status: statusType
                     });
                     alert("Berita berhasil diperbarui!");
                 } else {
-                    // Tambah data baru
                     await addDoc(collection(db, "news"), {
                         title, category, image, content, status: statusType, createdAt: serverTimestamp()
                     });
@@ -574,7 +555,7 @@
                 switchTab('home');
             } catch (err) {
                 console.error("Gagal menyimpan:", err);
-                alert("Terjadi kesalahan saat menyimpan data.");
+                alert("Terjadi kesalahan saat menyimpan data: " + err.message);
             }
         }
 
@@ -615,7 +596,6 @@
             document.getElementById('newsForm').reset();
             document.getElementById('editDocId').value = "";
             document.getElementById('formHeaderTitle').innerText = "Entri Berita Baru (Blogger Style)";
-            document.getElementById('cancelEditDir')?.classList.add('hidden');
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
@@ -627,7 +607,7 @@
                     fetchNews();
                 } catch(err) {
                     console.error("Gagal menghapus:", err);
-                    alert("Gagal menghapus berita.");
+                    alert("Gagal menghapus berita: " + err.message);
                 }
             }
         }
@@ -636,7 +616,6 @@
             alert("REDAKSI MEDIA DESA ONLINE JATENG-DIY\nPenanggung Jawab: Tim Redaksi Utama\nSekretariat: Jl. Kaliurang KM 10, Sleman, D.I. Yogyakarta\nWhatsApp Center: 08551236277");
         }
 
-        // Jalankan pengambilan data saat halaman dimuat
         fetchNews();
     </script>
 </body>
