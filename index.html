@@ -272,9 +272,22 @@
     <!-- MODAL BACA BERITA -->
     <div id="readModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 max-w-2xl w-full rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b dark:border-gray-700 flex justify-between items-center bg-gray-50 dark:bg-gray-900">
-                <span id="modalCategory" class="bg-green-100 text-primary px-2.5 py-1 rounded text-xs font-bold uppercase">Kategori</span>
-                <button onclick="closeReadModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xl font-bold px-2">&times;</button>
+            <div class="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex flex-wrap justify-between items-center gap-4">
+                <!-- Tombol Share -->
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Bagikan:</span>
+                    <button onclick="shareNews('wa')" class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition shadow" title="Bagikan ke WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </button>
+                    <button onclick="shareNews('fb')" class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition shadow" title="Bagikan ke Facebook">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </button>
+                    <button onclick="shareNews('copy')" class="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center hover:bg-gray-600 transition shadow" title="Salin Tautan (Untuk IG/Lainnya)">
+                        <i class="fa-solid fa-link"></i>
+                    </button>
+                </div>
+                <!-- Tombol Tutup -->
+                <button onclick="closeReadModal()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-5 py-2 rounded-lg font-medium text-sm transition whitespace-nowrap">Tutup</button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4">
                 <h2 id="modalTitle" class="text-2xl font-black">Judul Berita</h2>
@@ -298,9 +311,31 @@
         </div>
     </footer>
 <!-- FIREBASE & LOGIKA APLIKASI -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    // Fungsi untuk membagikan berita
+        window.shareNews = function(platform) {
+            // Mengambil judul berita yang sedang dibaca di modal
+            const title = document.getElementById('modalTitle').innerText;
+            // Mengambil URL website saat ini
+            const url = window.location.href; 
+            
+            // Format teks yang akan dikirim
+            const textToShare = `Baca berita desa terkini: *${title}*\nSelengkapnya di: ${url}`;
+
+            if (platform === 'wa') {
+                // Buka tab baru ke WhatsApp
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}`, '_blank');
+            } else if (platform === 'fb') {
+                // Buka tab baru ke Facebook
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(title)}`, '_blank');
+            } else if (platform === 'copy') {
+                // Salin ke papan klip (Clipboard)
+                navigator.clipboard.writeText(textToShare).then(() => {
+                    alert("Tautan dan judul berita berhasil disalin! Silakan paste di Instagram, Twitter, atau aplikasi lainnya.");
+                }).catch(err => {
+                    console.error('Gagal menyalin teks: ', err);
+                });
+            }
+        };
 
         const firebaseConfig = {
             apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
@@ -711,24 +746,23 @@
     </script>
 </body>
 </html>
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+</footer>
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
-  authDomain: "media-desa-online.firebaseapp.com",
-  projectId: "media-desa-online",
-  storageBucket: "media-desa-online.firebasestorage.app",
-  messagingSenderId: "824125231737",
-  appId: "1:824125231737:web:529291c09037322e593aa8",
-  measurementId: "G-6VH2G8Q8VP"
-};
+    <!-- FIREBASE & LOGIKA APLIKASI -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
+            authDomain: "media-desa-online.firebaseapp.com",
+            projectId: "media-desa-online",
+            storageBucket: "media-desa-online.firebasestorage.app",
+            messagingSenderId: "824125231737",
+            appId: "1:824125231737:web:529291c09037322e593aa8",
+            measurementId: "G-6VH2G8Q8VP"
+        };
+        // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+
