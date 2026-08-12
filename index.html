@@ -203,7 +203,7 @@
             <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
                 <div class="flex justify-between items-center border-b pb-2 dark:border-gray-700">
                     <h3 class="font-bold text-sm flex items-center gap-2 text-primary">
-                        <i class="fa-solid fa-clapperboard"></i> <span data-lang-key="ads_title">IKLAN VIDEO PENDEK DESA</span>
+                        <i class="fa-solid fa-clapperboard"></i> <span data-lang-key="ads_title">IKLAN VIDEO PENDEK </span>
                     </h3>
                     <span class="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded">SPONSORED</span>
                 </div>
@@ -263,6 +263,59 @@
         </aside>
 
     </div>
+<!-- WIDGET KATEGORI WILAYAH JATENG-DIY -->
+            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
+                <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2 text-primary">
+                    <i class="fa-solid fa-map-pin"></i> <span>Kategori Wilayah</span>
+                </h3>
+                <div class="flex flex-wrap gap-1.5 max-h-80 overflow-y-auto pr-1">
+                    <!-- Wilayah DIY -->
+                    <button onclick="filterByRegion('Yogya')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Yogya</button>
+                    <button onclick="filterByRegion('Sleman')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Sleman</button>
+                    <button onclick="filterByRegion('Bantul')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Bantul</button>
+                    <button onclick="filterByRegion('Kulon Progo')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kulon Progo</button>
+                    <button onclick="filterByRegion('Gunungkidul')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Gunungkidul</button>
+
+                    <!-- Wilayah Kabupaten Jateng -->
+                    <button onclick="filterByRegion('Banjarnegara')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Banjarnegara</button>
+                    <button onclick="filterByRegion('Banyumas')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Banyumas</button>
+                    <button onclick="filterByRegion('Batang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Batang</button>
+                    <button onclick="filterByRegion('Blora')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Blora</button>
+                    <button onclick="filterByRegion('Boyolali')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Boyolali</button>
+                    <button onclick="filterByRegion('Brebes')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Brebes</button>
+                    <button onclick="filterByRegion('Cilacap')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Cilacap</button>
+                    <button onclick="filterByRegion('Demak')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Demak</button>
+                    <button onclick="filterByRegion('Grobogan')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Grobogan</button>
+                    <button onclick="filterByRegion('Jepara')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Jepara</button>
+                    <button onclick="filterByRegion('Karanganyar')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Karanganyar</button>
+                    <button onclick="filterByRegion('Kebumen')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kebumen</button>
+                    <button onclick="filterByRegion('Kendal')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kendal</button>
+                    <button onclick="filterByRegion('Klaten')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Klaten</button>
+                    <button onclick="filterByRegion('Kudus')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kudus</button>
+                    <button onclick="filterByRegion('Magelang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Magelang</button>
+                    <button onclick="filterByRegion('Pati')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Pati</button>
+                    <button onclick="filterByRegion('Pekalongan')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Pekalongan</button>
+                    <button onclick="filterByRegion('Pemalang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Pemalang</button>
+                    <button onclick="filterByRegion('Purbalingga')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Purbalingga</button>
+                    <button onclick="filterByRegion('Purworejo')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Purworejo</button>
+                    <button onclick="filterByRegion('Rembang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Rembang</button>
+                    <button onclick="filterByRegion('Semarang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Semarang</button>
+                    <button onclick="filterByRegion('Sragen')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Sragen</button>
+                    <button onclick="filterByRegion('Sukoharjo')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Sukoharjo</button>
+                    <button onclick="filterByRegion('Tegal')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Tegal</button>
+                    <button onclick="filterByRegion('Temanggung')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Temanggung</button>
+                    <button onclick="filterByRegion('Wonogiri')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Wonogiri</button>
+                    <button onclick="filterByRegion('Wonosobo')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Wonosobo</button>
+
+                    <!-- Wilayah Kota -->
+                    <button onclick="filterByRegion('Kota Magelang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Magelang</button>
+                    <button onclick="filterByRegion('Kota Pekalongan')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Pekalongan</button>
+                    <button onclick="filterByRegion('Kota Salatiga')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Salatiga</button>
+                    <button onclick="filterByRegion('Kota Semarang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Semarang</button>
+                    <button onclick="filterByRegion('Kota Surakarta')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Surakarta</button>
+                    <button onclick="filterByRegion('Kota Tegal')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Tegal</button>
+                </div>
+            </div>
 
     <!-- MODAL BACA BERITA -->
     <div id="readModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
@@ -310,7 +363,33 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+window.filterNews = function() {
+            const keyword = document.getElementById('searchNewsInput').value.toLowerCase();
+            const filtered = allNewsData.filter(item => item.title.toLowerCase().includes(keyword) || item.category.toLowerCase().includes(keyword));
+            renderHomeFeed(filtered);
+        }
 
+        // --- TARUH KODE DI SINI ---
+        window.filterByRegion = function(regionName) {
+            window.switchTab('home');
+            
+            const searchInput = document.getElementById('searchNewsInput');
+            searchInput.value = regionName;
+            
+            const keyword = regionName.toLowerCase();
+            const filtered = allNewsData.filter(item => 
+                item.title.toLowerCase().includes(keyword) || 
+                item.category.toLowerCase().includes(keyword) ||
+                item.content.toLowerCase().includes(keyword)
+            );
+            
+            renderHomeFeed(filtered);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        // -------------------------
+
+        window.openReadModal = function(id) {
+            // ... (lanjutan kode berikutnya)
         // Konfigurasi Firebase Asli
         const firebaseConfig = {
             apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
