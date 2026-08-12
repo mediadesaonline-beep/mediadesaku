@@ -317,6 +317,36 @@
 
         let allNewsData = [];
 
+// Fungsi untuk berpindah tab dan memberikan password pada tab admin
+        window.switchTab = function(tabId) {
+            // 1. Cek jika yang diklik adalah tab 'editor' (Entri & Kelola)
+            if (tabId === 'editor') {
+                const password = prompt("Masukkan password admin untuk mengelola berita:");
+                
+                // Jika password salah atau dibatalkan
+                if (password !== "media 123") {
+                    alert("Password salah! Akses ditolak.");
+                    return; // Menghentikan fungsi, tab tidak akan berpindah
+                }
+            }
+
+            // 2. Sembunyikan semua tampilan konten tab
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-editor').classList.add('hidden');
+            document.getElementById('view-archive').classList.add('hidden');
+
+            // 3. Reset warna semua tombol tab menjadi abu-abu (tidak aktif)
+            const btnInactive = "px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2";
+            document.getElementById('tabBtn-home').className = btnInactive;
+            document.getElementById('tabBtn-editor').className = btnInactive;
+            document.getElementById('tabBtn-archive').className = btnInactive;
+
+            // 4. Tampilkan konten tab yang baru saja diklik
+            document.getElementById('view-' + tabId).classList.remove('hidden');
+
+            // 5. Ubah warna tombol yang diklik menjadi hijau (aktif)
+            document.getElementById('tabBtn-' + tabId).className = "px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2";
+        };
         window.handleFormSubmit = async function(event) {
             event.preventDefault();
             submitNewsData('published');
