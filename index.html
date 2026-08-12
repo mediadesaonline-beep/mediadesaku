@@ -36,7 +36,7 @@
                         <span>MEDIA DESA ONLINE</span>
                         <span class="text-xs bg-primary text-white px-2 py-0.5 rounded-full font-bold">JATENG-DIY</span>
                     </div>
-                    <span class="text-xs md:text-sm font-extrabold text-primary tracking-wider uppercase" data-lang-key="sub_brand">SELALU ADA YANG BARU</span>
+                    <span class="text-xs md:text-sm font-extrabold text-primary tracking-wider uppercase">SELALU ADA YANG BARU</span>
                 </div>
             </a>
 
@@ -58,7 +58,7 @@
     <!-- TEKS BERJALAN BESAR (MARQUEE) -->
     <div class="bg-primary text-white py-2 px-4 shadow-inner overflow-hidden whitespace-nowrap flex items-center">
         <div class="bg-green-800 px-3 py-1 rounded text-xs font-bold uppercase mr-3 tracking-wider flex items-center gap-1 shadow">
-            <i class="fa-solid fa-bullhorn"></i> <span data-lang-key="ticker_title">INFO TERBARU</span>
+            <i class="fa-solid fa-bullhorn"></i> <span>INFO TERBARU</span>
         </div>
         <marquee class="text-sm font-medium" scrollamount="6">
             Selamat datang di portal resmi mediadesaonline JATENG-DIY. Selalu Ada Yang Baru! Berita, Inspirasi, Kolaborasi, Pembangunan, dan UMKM Desa Terkini se-Jawa Tengah & D.I. Yogyakarta. Layanan WhatsApp Center: 08551236277.
@@ -70,13 +70,13 @@
         <div class="container mx-auto px-4 flex flex-wrap justify-between items-center py-3 gap-2">
             <div class="flex flex-wrap gap-2">
                 <button onclick="switchTab('home')" id="tabBtn-home" class="px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2">
-                    <i class="fa-solid fa-newspaper"></i> <span data-lang-key="nav_home">Beranda Berita</span>
+                    <i class="fa-solid fa-newspaper"></i> <span>Beranda Berita</span>
                 </button>
                 <button onclick="switchTab('editor')" id="tabBtn-editor" class="px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2">
-                    <i class="fa-solid fa-pen-to-square"></i> <span data-lang-key="nav_editor">Entri & Kelola (Blogger)</span>
+                    <i class="fa-solid fa-pen-to-square"></i> <span>Entri & Kelola (Blogger)</span>
                 </button>
                 <button onclick="switchTab('archive')" id="tabBtn-archive" class="px-4 py-2 rounded-lg font-medium bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2">
-                    <i class="fa-solid fa-box-archive"></i> <span data-lang-key="nav_archive">Arsip Terpisah</span>
+                    <i class="fa-solid fa-box-archive"></i> <span>Arsip Terpadu</span>
                 </button>
             </div>
             <div>
@@ -101,11 +101,11 @@
                         <i class="fa-solid fa-landmark text-9xl"></i>
                     </div>
                     <span class="bg-yellow-500 text-gray-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1">
-                        <i class="fa-solid fa-star"></i> <span data-lang-key="hero_badge">PORTAL RESMI JATENG & DIY</span>
+                        <i class="fa-solid fa-star"></i> <span>PORTAL RESMI JATENG & DIY</span>
                     </span>
                     <h2 class="text-2xl md:text-4xl font-black tracking-tight">Dari Desa, Untuk Negeri <span class="text-yellow-400">Jawa Tengah & D.I. Yogyakarta</span></h2>
-                    <p class="text-sm md:text-base text-gray-200 max-w-2xl" data-lang-key="hero_desc">
-                        Pusat informasi pembangunan, administrasi, wisata budaya (Borobudur & Tugu), serta keunggulan UMKM desa dari seluruh kabupaten/kota se-Jateng dan DIY.
+                    <p class="text-sm md:text-base text-gray-200 max-w-2xl">
+                        Pusat informasi pembangunan, administrasi, wisata budaya, serta keunggulan UMKM desa dari seluruh kabupaten/kota se-Jateng dan DIY.
                     </p>
                     <div class="flex flex-wrap gap-2 pt-2">
                         <span class="bg-white/20 px-3 py-1 rounded-lg text-xs font-medium">BERITA</span>
@@ -120,7 +120,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700">
                     <div class="flex items-center gap-2 w-full md:w-auto">
                         <h3 class="font-bold text-lg flex items-center gap-2">
-                            <i class="fa-solid fa-earth-americas text-primary"></i> <span data-lang-key="latest_news_title">Berita Desa Terkini</span>
+                            <i class="fa-solid fa-earth-americas text-primary"></i> <span>Berita Desa Terkini</span>
                         </h3>
                     </div>
                     <div class="w-full md:w-72">
@@ -130,7 +130,7 @@
 
                 <!-- FEED BERITA UTAMA -->
                 <div id="newsFeed" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <p class="text-gray-500 text-center py-8 col-span-2" data-lang-key="loading">Memuat data berita dari Firebase...</p>
+                    <p class="text-gray-500 text-center py-8 col-span-2">Memuat data berita dari Firebase...</p>
                 </div>
 
                 <!-- ARSIP BERITA PILIHAN (6 KOTAK KECIL DI BAWAH BERITA UTAMA) -->
@@ -149,7 +149,7 @@
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-4">
                     <div class="border-b pb-3 dark:border-gray-700 flex justify-between items-center">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-primary">
-                            <i class="fa-solid fa-pen-nib"></i> <span id="formHeaderTitle" data-lang-key="form_new_title">Entri Berita Baru (Blogger Style)</span>
+                            <i class="fa-solid fa-pen-nib"></i> <span id="formHeaderTitle">Entri Berita Baru (Blogger Style)</span>
                         </h2>
                         <button onclick="resetNewsForm()" id="cancelEditBtn" class="hidden text-xs bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded transition">Batal Edit</button>
                     </div>
@@ -157,29 +157,29 @@
                     <form id="newsForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
                         <input type="hidden" id="editDocId">
                         <div>
-                            <label class="block text-sm font-medium mb-1" data-lang-key="lbl_title">Judul Berita</label>
+                            <label class="block text-sm font-medium mb-1">Judul Berita</label>
                             <input type="text" id="newsTitle" required placeholder="Masukkan judul berita utama desa..." class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-medium mb-1" data-lang-key="lbl_category">Kategori / Wilayah</label>
+                                <label class="block text-sm font-medium mb-1">Kategori / Wilayah</label>
                                 <input type="text" id="newsCategory" required placeholder="Contoh: Sleman / Kab. Banyumas / UMKM" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium mb-1" data-lang-key="lbl_image">URL Gambar Utama</label>
+                                <label class="block text-sm font-medium mb-1">URL Gambar Utama</label>
                                 <input type="url" id="newsImage" placeholder="https://example.com/gambar.jpg" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium mb-1" data-lang-key="lbl_content">Isi Berita Lengkap</label>
+                            <label class="block text-sm font-medium mb-1">Isi Berita Lengkap</label>
                             <textarea id="newsContent" rows="6" required placeholder="Tulis narasi berita secara lengkap di sini..." class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
                         </div>
                         <div class="flex flex-wrap gap-3 pt-2">
                             <button type="button" onclick="saveNewsStatus('draft')" class="bg-amber-600 hover:bg-amber-700 text-white font-medium px-5 py-2.5 rounded-lg transition flex items-center gap-2">
-                                <i class="fa-solid fa-floppy-disk"></i> <span data-lang-key="btn_save_draft">Simpan Draf</span>
+                                <i class="fa-solid fa-floppy-disk"></i> <span>Simpan Draf</span>
                             </button>
                             <button type="submit" class="bg-primary hover:bg-green-700 text-white font-medium px-6 py-2.5 rounded-lg transition flex items-center gap-2">
-                                <i class="fa-solid fa-paper-plane"></i> <span data-lang-key="btn_publish">Publikasikan Berita</span>
+                                <i class="fa-solid fa-paper-plane"></i> <span>Publikasikan Berita</span>
                             </button>
                         </div>
                     </form>
@@ -188,7 +188,7 @@
                 <!-- DAFTAR KELOLA BERITA -->
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-4">
                     <h3 class="font-bold text-lg border-b pb-2 dark:border-gray-700 flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-primary"></i> <span data-lang-key="manage_title">Kelola Entri Berita (Draf & Terbitan)</span>
+                        <i class="fa-solid fa-list-check text-primary"></i> <span>Kelola Entri Berita (Draf & Terbitan)</span>
                     </h3>
                     <div id="manageNewsList" class="space-y-3">
                         <p class="text-gray-500 text-center py-4">Memuat data kelola...</p>
@@ -196,14 +196,14 @@
                 </div>
             </div>
 
-            <!-- TAB 3: ARSIP TERPISAH -->
+            <!-- TAB 3: ARSIP TERPADU -->
             <div id="view-archive" class="hidden space-y-6">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-4">
                     <div class="border-b pb-3 dark:border-gray-700">
                         <h2 class="text-xl font-bold flex items-center gap-2 text-primary">
-                            <i class="fa-solid fa-box-archive"></i> <span data-lang-key="archive_page_title">Arsip Berita Desa Terpadu</span>
+                            <i class="fa-solid fa-box-archive"></i> <span>Arsip Berita Desa Terpadu</span>
                         </h2>
-                        <p class="text-xs text-gray-500 mt-1" data-lang-key="archive_page_desc">Seluruh riwayat publikasi berita desa dari berbagai wilayah Jateng dan DIY tersimpan rapi di sini.</p>
+                        <p class="text-xs text-gray-500 mt-1">Seluruh riwayat publikasi berita desa dari berbagai wilayah Jateng dan DIY tersimpan rapi di sini.</p>
                     </div>
                     <div id="archiveNewsList" class="space-y-4">
                         <p class="text-gray-500 text-center py-8">Memuat arsip berita...</p>
@@ -220,11 +220,10 @@
             <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
                 <div class="flex justify-between items-center border-b pb-2 dark:border-gray-700">
                     <h3 class="font-bold text-sm flex items-center gap-2 text-primary">
-                        <i class="fa-solid fa-clapperboard"></i> <span data-lang-key="ads_title">IKLAN VIDEO PENDEK</span>
+                        <i class="fa-solid fa-clapperboard"></i> <span>IKLAN VIDEO PENDEK</span>
                     </h3>
                     <span class="bg-red-100 text-red-600 text-[10px] font-bold px-2 py-0.5 rounded">SPONSORED</span>
                 </div>
-                <!-- Embed YouTube Shorts -->
                 <div class="relative rounded-lg overflow-hidden shadow aspect-[9/16] bg-black">
                     <iframe 
                         class="w-full h-full" 
@@ -232,7 +231,6 @@
                         title="Iklan Mediadesaonline" 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        referrerpolicy="strict-origin-when-cross-origin" 
                         allowfullscreen>
                     </iframe>
                 </div>
@@ -242,17 +240,17 @@
             <!-- WIDGET LOKASI & KONTAK -->
             <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
                 <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2">
-                    <i class="fa-solid fa-map-location-dot text-primary"></i> <span data-lang-key="contact_title">Lokasi & Kontak Resmi</span>
+                    <i class="fa-solid fa-map-location-dot text-primary"></i> <span>Lokasi & Kontak Resmi</span>
                 </h3>
                 <div class="space-y-3 text-sm text-gray-600 dark:text-gray-300">
                     <div class="flex items-start gap-2.5">
                         <i class="fa-solid fa-location-dot text-primary mt-1"></i>
-                        <p><strong class="block text-gray-800 dark:text-white" data-lang-key="office_label">Kantor Sekretariat:</strong> Jl. Kaliurang KM 10, Kabupaten Sleman, D.I. Yogyakarta</p>
+                        <p><strong class="block text-gray-800 dark:text-white">Kantor Sekretariat:</strong> Jl. Kaliurang KM 10, Kabupaten Sleman, D.I. Yogyakarta</p>
                     </div>
                     <div class="flex items-center gap-2.5">
                         <i class="fa-brands fa-whatsapp text-green-500 text-lg"></i>
                         <div>
-                            <span class="block text-xs text-gray-400" data-lang-key="wa_label">Layanan WhatsApp Center:</span>
+                            <span class="block text-xs text-gray-400">Layanan WhatsApp Center:</span>
                             <a href="https://wa.me/628551236277" target="_blank" class="font-bold text-primary hover:underline">08551236277</a>
                         </div>
                     </div>
@@ -262,7 +260,7 @@
             <!-- WIDGET MEDIA SOSIAL -->
             <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
                 <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2">
-                    <i class="fa-solid fa-share-nodes text-primary"></i> <span data-lang-key="social_title">Media Sosial Resmi</span>
+                    <i class="fa-solid fa-share-nodes text-primary"></i> <span>Media Sosial Resmi</span>
                 </h3>
                 <div class="flex flex-col gap-2.5">
                     <a href="https://www.youtube.com/@mediadesaonline2024" target="_blank" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition text-sm">
@@ -277,57 +275,21 @@
                 </div>
             </div>
 
-            <!-- WIDGET KATEGORI WILAYAH JATENG-DIY -->
+            <!-- WIDGET KATEGORI WILAYAH -->
             <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
                 <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2 text-primary">
                     <i class="fa-solid fa-map-pin"></i> <span>Kategori Wilayah</span>
                 </h3>
                 <div class="flex flex-wrap gap-1.5 max-h-80 overflow-y-auto pr-1">
-                    <!-- Wilayah DIY -->
                     <button onclick="filterByRegion('Yogya')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Yogya</button>
                     <button onclick="filterByRegion('Sleman')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Sleman</button>
                     <button onclick="filterByRegion('Bantul')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Bantul</button>
                     <button onclick="filterByRegion('Kulon Progo')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kulon Progo</button>
                     <button onclick="filterByRegion('Gunungkidul')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Gunungkidul</button>
-
-                    <!-- Wilayah Kabupaten Jateng -->
-                    <button onclick="filterByRegion('Banjarnegara')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Banjarnegara</button>
                     <button onclick="filterByRegion('Banyumas')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Banyumas</button>
-                    <button onclick="filterByRegion('Batang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Batang</button>
-                    <button onclick="filterByRegion('Blora')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Blora</button>
-                    <button onclick="filterByRegion('Boyolali')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Boyolali</button>
-                    <button onclick="filterByRegion('Brebes')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Brebes</button>
-                    <button onclick="filterByRegion('Cilacap')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Cilacap</button>
-                    <button onclick="filterByRegion('Demak')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Demak</button>
-                    <button onclick="filterByRegion('Grobogan')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Grobogan</button>
-                    <button onclick="filterByRegion('Jepara')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Jepara</button>
-                    <button onclick="filterByRegion('Karanganyar')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Karanganyar</button>
-                    <button onclick="filterByRegion('Kebumen')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kebumen</button>
-                    <button onclick="filterByRegion('Kendal')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kendal</button>
-                    <button onclick="filterByRegion('Klaten')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Klaten</button>
-                    <button onclick="filterByRegion('Kudus')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kudus</button>
                     <button onclick="filterByRegion('Magelang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Magelang</button>
-                    <button onclick="filterByRegion('Pati')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Pati</button>
-                    <button onclick="filterByRegion('Pekalongan')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Pekalongan</button>
-                    <button onclick="filterByRegion('Pemalang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Pemalang</button>
-                    <button onclick="filterByRegion('Purbalingga')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Purbalingga</button>
-                    <button onclick="filterByRegion('Purworejo')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Purworejo</button>
-                    <button onclick="filterByRegion('Rembang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Rembang</button>
                     <button onclick="filterByRegion('Semarang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Semarang</button>
-                    <button onclick="filterByRegion('Sragen')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Sragen</button>
-                    <button onclick="filterByRegion('Sukoharjo')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Sukoharjo</button>
-                    <button onclick="filterByRegion('Tegal')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Tegal</button>
-                    <button onclick="filterByRegion('Temanggung')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Temanggung</button>
-                    <button onclick="filterByRegion('Wonogiri')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Wonogiri</button>
-                    <button onclick="filterByRegion('Wonosobo')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Wonosobo</button>
-
-                    <!-- Wilayah Kota -->
-                    <button onclick="filterByRegion('Kota Magelang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Magelang</button>
-                    <button onclick="filterByRegion('Kota Pekalongan')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Pekalongan</button>
-                    <button onclick="filterByRegion('Kota Salatiga')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Salatiga</button>
-                    <button onclick="filterByRegion('Kota Semarang')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Semarang</button>
-                    <button onclick="filterByRegion('Kota Surakarta')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Surakarta</button>
-                    <button onclick="filterByRegion('Kota Tegal')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Kota Tegal</button>
+                    <button onclick="filterByRegion('Surakarta')" class="text-xs bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white px-2.5 py-1 rounded-md transition font-medium">Surakarta</button>
                 </div>
             </div>
 
@@ -345,25 +307,17 @@
 
     </div>
 
-    <!-- MODAL BACA BERITA & REDAKSI -->
+    <!-- MODAL BACA BERITA -->
     <div id="readModal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white dark:bg-gray-800 max-w-2xl w-full rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div class="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex flex-wrap justify-between items-center gap-4">
-                <!-- Tombol Share -->
+            <div class="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex justify-between items-center gap-4">
                 <div class="flex items-center gap-2">
-                    <span class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase">Bagikan:</span>
-                    <button onclick="shareNews('wa')" class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition shadow" title="Bagikan ke WhatsApp">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </button>
-                    <button onclick="shareNews('fb')" class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition shadow" title="Bagikan ke Facebook">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </button>
-                    <button onclick="shareNews('copy')" class="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center hover:bg-gray-600 transition shadow" title="Salin Tautan">
-                        <i class="fa-solid fa-link"></i>
-                    </button>
+                    <span class="text-xs font-bold text-gray-500 uppercase">Bagikan:</span>
+                    <button onclick="shareNews('wa')" class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center hover:bg-green-600 transition shadow"><i class="fa-brands fa-whatsapp"></i></button>
+                    <button onclick="shareNews('fb')" class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition shadow"><i class="fa-brands fa-facebook-f"></i></button>
+                    <button onclick="shareNews('copy')" class="w-8 h-8 rounded-full bg-gray-500 text-white flex items-center justify-center hover:bg-gray-600 transition shadow"><i class="fa-solid fa-link"></i></button>
                 </div>
-                <!-- Tombol Tutup -->
-                <button onclick="closeReadModal()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-5 py-2 rounded-lg font-medium text-sm transition whitespace-nowrap">Tutup</button>
+                <button onclick="closeReadModal()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg font-medium text-sm transition">Tutup</button>
             </div>
             <div class="p-6 overflow-y-auto space-y-4">
                 <h2 id="modalTitle" class="text-2xl font-black">Judul Berita</h2>
@@ -374,7 +328,7 @@
                 <div id="modalContent" class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line text-base"></div>
             </div>
             <div class="p-4 border-t dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex justify-end">
-                <button onclick="closeReadModal()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 px-5 py-2 rounded-lg font-medium text-sm transition">Tutup</button>
+                <button onclick="closeReadModal()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 px-5 py-2 rounded-lg font-medium text-sm transition">Tutup</button>
             </div>
         </div>
     </div>
@@ -387,13 +341,303 @@
         </div>
     </footer>
 
-    <!-- FIREBASE & LOGIKA DATA -->
+    <!-- FIREBASE & LOGIKA SKRIP UTAMA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Pastikan konfigurasi dan fungsi render berita Anda memperbarui #archiveFeed menggunakan:
-        // const archiveData = allNews.slice(2, 8); (Mengambil 6 berita di bawah berita utama)
+        // ==========================================
+        // GANTI DENGAN KONFIGURASI FIREBASE ANDA SENDIRI
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "ISI_API_KEY_ANDA",
+            authDomain: "ISI_AUTH_DOMAIN_ANDA",
+            projectId: "ISI_PROJECT_ID_ANDA",
+            storageBucket: "ISI_STORAGE_BUCKET_ANDA",
+            messagingSenderId: "ISI_MESSAGING_SENDER_ID_ANDA",
+            appId: "ISI_APP_ID_ANDA"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let allNews = [];
+        let currentReadItem = null;
+
+        window.switchTab = function(tabName) {
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-editor').classList.add('hidden');
+            document.getElementById('view-archive').classList.add('hidden');
+            
+            document.getElementById('tabBtn-home').className = "px-4 py-2 rounded-lg font-medium bg-gray-800 text-gray-200 transition flex items-center gap-2";
+            document.getElementById('tabBtn-editor').className = "px-4 py-2 rounded-lg font-medium bg-gray-800 text-gray-200 transition flex items-center gap-2";
+            document.getElementById('tabBtn-archive').className = "px-4 py-2 rounded-lg font-medium bg-gray-800 text-gray-200 transition flex items-center gap-2";
+
+            if(tabName === 'home') {
+                document.getElementById('view-home').classList.remove('hidden');
+                document.getElementById('tabBtn-home').className = "px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2";
+            } else if(tabName === 'editor') {
+                document.getElementById('view-editor').classList.remove('hidden');
+                document.getElementById('tabBtn-editor').className = "px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2";
+            } else if(tabName === 'archive') {
+                document.getElementById('view-archive').classList.remove('hidden');
+                document.getElementById('tabBtn-archive').className = "px-4 py-2 rounded-lg font-medium bg-primary text-white transition flex items-center gap-2";
+                renderArchivePage();
+            }
+        }
+
+        window.toggleDarkMode = function() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if(html.classList.contains('light')) {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                icon.className = "fa-solid fa-sun";
+            } else {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                icon.className = "fa-solid fa-moon";
+            }
+        }
+
+        // Ambil Data Berita dari Firestore
+        async function fetchNews() {
+            try {
+                const q = query(collection(db, "news"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                allNews = [];
+                querySnapshot.forEach((docSnap) => {
+                    allNews.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                renderNewsUI(allNews);
+                renderManageList(allNews);
+            } catch (error) {
+                console.error("Gagal mengambil data: ", error);
+                document.getElementById('newsFeed').innerHTML = `<p class="text-red-500 text-center col-span-2">Gagal memuat berita dari Firebase. Periksa konfigurasi Anda.</p>`;
+            }
+        }
+
+        function renderNewsUI(data) {
+            const newsFeed = document.getElementById('newsFeed');
+            const archiveFeed = document.getElementById('archiveFeed');
+            
+            // Filter hanya yang berstatus 'published' (atau tampilkan semua jika status belum diatur)
+            const publishedNews = data.filter(item => !item.status || item.status === 'published');
+
+            if(publishedNews.length === 0) {
+                newsFeed.innerHTML = `<p class="text-gray-500 text-center col-span-2 py-8">Belum ada berita terpublikasi.</p>`;
+                archiveFeed.innerHTML = `<p class="text-gray-500 text-sm col-span-3 text-center py-4">Belum ada arsip.</p>`;
+                return;
+            }
+
+            // Berita Utama (Ambil 2 berita teratas)
+            const mainNews = publishedNews.slice(0, 2);
+            newsFeed.innerHTML = mainNews.map(item => `
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 flex flex-col justify-between hover:shadow-lg transition">
+                    <div>
+                        ${item.image ? `<img src="${item.image}" class="w-full h-48 object-cover" alt="Cover">` : ''}
+                        <div class="p-5 space-y-2">
+                            <span class="text-xs bg-primary/10 text-primary font-bold px-2.5 py-1 rounded uppercase">${item.category || 'Desa'}</span>
+                            <h4 class="text-lg font-bold text-gray-900 dark:text-white line-clamp-2">${item.title}</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">${item.content}</p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 flex justify-between items-center">
+                        <span class="text-xs text-gray-400">${item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('id-ID') : 'Baru saja'}</span>
+                        <button onclick="readNews('${item.id}')" class="text-sm text-primary font-bold hover:underline">Baca Selengkapnya &rarr;</button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Arsip Berita Pilihan (Ambil 6 berita berikutnya, index 2 sampai 8)
+            const archiveData = publishedNews.slice(2, 8);
+            if(archiveData.length === 0) {
+                archiveFeed.innerHTML = `<p class="text-gray-500 text-sm col-span-3 text-center py-4">Belum ada arsip pilihan tambahan.</p>`;
+            } else {
+                archiveFeed.innerHTML = archiveData.map(item => `
+                    <div class="bg-white dark:bg-gray-800 p-3 rounded-lg shadow border border-gray-200 dark:border-gray-700 hover:border-primary transition flex flex-col justify-between">
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-primary">${item.category || 'Berita'}</span>
+                            <h4 class="text-sm font-bold mt-1 text-gray-900 dark:text-white line-clamp-2">${item.title}</h4>
+                        </div>
+                        <button onclick="readNews('${item.id}')" class="mt-3 text-xs text-primary font-bold hover:underline text-left">Baca &rarr;</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        window.renderArchivePage = function() {
+            const list = document.getElementById('archiveNewsList');
+            const publishedNews = allNews.filter(item => !item.status || item.status === 'published');
+            if(publishedNews.length === 0) {
+                list.innerHTML = `<p class="text-gray-500 text-center py-4">Arsip kosong.</p>`;
+                return;
+            }
+            list.innerHTML = publishedNews.map(item => `
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 gap-3">
+                    <div>
+                        <span class="text-xs bg-primary text-white px-2 py-0.5 rounded font-bold uppercase">${item.category || 'Desa'}</span>
+                        <h4 class="font-bold text-base mt-1 text-gray-900 dark:text-white">${item.title}</h4>
+                        <span class="text-xs text-gray-500">${item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('id-ID') : ''}</span>
+                    </div>
+                    <button onclick="readNews('${item.id}')" class="px-4 py-2 bg-primary text-white text-xs font-bold rounded hover:bg-green-700 transition">Baca Berita</button>
+                </div>
+            `).join('');
+        }
+
+        window.readNews = function(id) {
+            const item = allNews.find(n => n.id === id);
+            if(!item) return;
+            currentReadItem = item;
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalDate').innerText = item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('id-ID', {dateStyle: 'full'}) : '';
+            document.getElementById('modalContent').innerText = item.content;
+            
+            const imgContainer = document.getElementById('modalImageContainer');
+            const imgElem = document.getElementById('modalImage');
+            if(item.image) {
+                imgElem.src = item.image;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+            document.getElementById('readModal').classList.remove('hidden');
+        }
+
+        window.closeReadModal = function() {
+            document.getElementById('readModal').classList.add('hidden');
+        }
+
+        window.shareNews = function(platform) {
+            if(!currentReadItem) return;
+            const url = window.location.href;
+            const text = `Baca berita: ${currentReadItem.title} di Media Desa Online Jateng-DIY`;
+            if(platform === 'wa') {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text + " - " + url)}`, '_blank');
+            } else if(platform === 'fb') {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            } else if(platform === 'copy') {
+                navigator.clipboard.writeText(url);
+                alert("Tautan berita berhasil disalin ke clipboard!");
+            }
+        }
+
+        window.filterNews = function() {
+            const keyword = document.getElementById('searchNewsInput').value.toLowerCase();
+            const filtered = allNews.filter(item => 
+                item.title.toLowerCase().includes(keyword) || 
+                (item.category && item.category.toLowerCase().includes(keyword))
+            );
+            renderNewsUI(filtered);
+        }
+
+        window.filterByRegion = function(regionName) {
+            document.getElementById('searchNewsInput').value = regionName;
+            filterNews();
+            window.scrollTo({top: 300, behavior: 'smooth'});
+        }
+
+        // Formulir Editor / Blogger Style
+        window.handleFormSubmit = function(e) {
+            e.preventDefault();
+            saveNewsStatus('published');
+        }
+
+        window.saveNewsStatus = async function(statusType) {
+            const docId = document.getElementById('editDocId').value;
+            const title = document.getElementById('newsTitle').value;
+            const category = document.getElementById('newsCategory').value;
+            const image = document.getElementById('newsImage').value;
+            const content = document.getElementById('newsContent').value;
+
+            if(!title || !content) {
+                alert("Judul dan isi berita wajib diisi!");
+                return;
+            }
+
+            try {
+                if(docId) {
+                    // Update data
+                    await updateDoc(doc(db, "news", docId), {
+                        title, category, image, content, status: statusType
+                    });
+                    alert("Berita berhasil diperbarui!");
+                } else {
+                    // Tambah data baru
+                    await addDoc(collection(db, "news"), {
+                        title, category, image, content, status: statusType, createdAt: serverTimestamp()
+                    });
+                    alert(statusType === 'published' ? "Berita berhasil dipublikasikan!" : "Berita disimpan sebagai draf.");
+                }
+                resetNewsForm();
+                fetchNews();
+                switchTab('home');
+            } catch (err) {
+                console.error("Gagal menyimpan:", err);
+                alert("Terjadi kesalahan saat menyimpan data.");
+            }
+        }
+
+        function renderManageList(data) {
+            const list = document.getElementById('manageNewsList');
+            if(data.length === 0) {
+                list.innerHTML = `<p class="text-gray-500 text-center py-4">Belum ada entri berita.</p>`;
+                return;
+            }
+            list.innerHTML = data.map(item => `
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 gap-2">
+                    <div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded uppercase ${item.status === 'draft' ? 'bg-amber-500 text-white' : 'bg-primary text-white'}">${item.status || 'published'}</span>
+                        <h4 class="font-bold text-sm mt-1 text-gray-900 dark:text-white">${item.title}</h4>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="editNews('${item.id}')" class="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition">Edit</button>
+                        <button onclick="deleteNewsItem('${item.id}')" class="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700 transition">Hapus</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.editNews = function(id) {
+            const item = allNews.find(n => n.id === id);
+            if(!item) return;
+            document.getElementById('editDocId').value = item.id;
+            document.getElementById('newsTitle').value = item.title;
+            document.getElementById('newsCategory').value = item.category || '';
+            document.getElementById('newsImage').value = item.image || '';
+            document.getElementById('newsContent').value = item.content;
+            document.getElementById('formHeaderTitle').innerText = "Edit Berita Desa";
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+            switchTab('editor');
+        }
+
+        window.resetNewsForm = function() {
+            document.getElementById('newsForm').reset();
+            document.getElementById('editDocId').value = "";
+            document.getElementById('formHeaderTitle').innerText = "Entri Berita Baru (Blogger Style)";
+            document.getElementById('cancelEditDir')?.classList.add('hidden');
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+
+        window.deleteNewsItem = async function(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus berita ini secara permanen?")) {
+                try {
+                    await deleteDoc(doc(db, "news", id));
+                    alert("Berita berhasil dihapus.");
+                    fetchNews();
+                } catch(err) {
+                    console.error("Gagal menghapus:", err);
+                    alert("Gagal menghapus berita.");
+                }
+            }
+        }
+
+        window.openRedaksiModal = function() {
+            alert("REDAKSI MEDIA DESA ONLINE JATENG-DIY\nPenanggung Jawab: Tim Redaksi Utama\nSekretariat: Jl. Kaliurang KM 10, Sleman, D.I. Yogyakarta\nWhatsApp Center: 08551236277");
+        }
+
+        // Jalankan pengambilan data saat halaman dimuat
+        fetchNews();
     </script>
 </body>
 </html>
