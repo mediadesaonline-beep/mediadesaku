@@ -297,8 +297,7 @@
             <p class="text-xs">Dari Desa, Untuk Negeri | Sekretariat: Jl. Kaliurang KM 10, Sleman, D.I. Yogyakarta</p>
         </div>
     </footer>
-
- <!-- FIREBASE & LOGIKA APLIKASI -->
+<!-- FIREBASE & LOGIKA APLIKASI -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -312,6 +311,7 @@
             appId: "1:824125231737:web:529291c09037322e593aa8",
             measurementId: "G-6VH2G8Q8VP"
         };
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
