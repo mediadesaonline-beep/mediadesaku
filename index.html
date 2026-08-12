@@ -298,18 +298,19 @@
         </div>
     </footer>
 
-   <!-- FIREBASE & LOGIKA APLIKASI -->
+ <!-- FIREBASE & LOGIKA APLIKASI -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "ISI_API_KEY_ANDA",
-            authDomain: "PROJECT_ID.firebaseapp.com",
-            projectId: "PROJECT_ID",
-            storageBucket: "PROJECT_ID.appspot.com",
-            messagingSenderId: "SENDER_ID",
-            appId: "APP_ID"
+            apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
+            authDomain: "media-desa-online.firebaseapp.com",
+            projectId: "media-desa-online",
+            storageBucket: "media-desa-online.firebasestorage.app",
+            messagingSenderId: "824125231737",
+            appId: "1:824125231737:web:529291c09037322e593aa8",
+            measurementId: "G-6VH2G8Q8VP"
         };
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
