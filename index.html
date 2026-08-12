@@ -1,3 +1,175 @@
+
+Gemini
+Percakapan baru
+Telusuri percakapan
+Gambar
+Koleksi
+Notebook baru
+Mengatur Tata Letak Blogger: Berita Utama & Populer
+Website Berita Desa dengan Firebase
+Percakapan dengan Gemini
+berita utama tampil 4 saja lainnya di kategori dan dibawah kategori berita 4 populer
+
+Untuk mengatur tata letak (layout) situs Blogger Anda (seperti yang terlihat pada tangkapan layar mediadesaonlineinfo.web.id) agar Berita Utama tampil 4 saja, kemudian Berita lainnya dikelompokkan berdasarkan kategori, dan di bawah kategori terdapat 4 Berita Populer, ikuti langkah-langkah pengaturan Tata Letak (Layout) dan Widget berikut ini:
+
+Langkah 1: Mengatur Berita Utama (4 Saja)
+Masuk ke halaman Blogger Anda, lalu pilih menu Tata Letak (Layout).
+
+Cari bagian widget yang menampilkan berita utama di halaman depan (biasanya menggunakan gadget Entri (Blog Posts) atau Daftar Entri / Featured Post).
+
+Klik tombol Edit (ikon pensil) pada gadget tersebut.
+
+Ubah pengaturannya:
+
+Jumlah postingan pada halaman utama: Masukkan angka 4.
+
+Simpan perubahan.
+
+Langkah 2: Mengatur Bagian Kategori Berita & Berita Populer di Sidebar (Kolom Samping)
+Agar kategori dan berita populer tersusun rapi di bawahnya (seperti area sidebar di sebelah kanan), lakukan penataan widget berikut:
+
+Di halaman Tata Letak, geser ke bagian Sidebar (kolom kanan).
+
+Tambahkan atau susun urutan widget dari atas ke bawah sebagai berikut:
+
+Gadget Label / Kategori: Tempatkan widget Label di atas untuk menampilkan daftar kategori berita Anda.
+
+Gadget Populer (Popular Posts): Tempatkan tepat di bawah widget Label/Kategori.
+
+Klik Edit pada gadget Entri Populer (Popular Posts), lalu sesuaikan pengaturannya:
+
+Tampilkan: Pilih Postingan populer.
+
+Jumlah postingan yang ditampilkan: Pilih atau ketik angka 4.
+
+Centang opsi yang ingin ditampilkan (misalnya Gambar cuplikan dan Kutipan agar tampilannya menarik seperti di beranda).
+
+Klik Simpan.
+
+Langkah 3: Menyimpan Tata Letak Keseluruhan
+Setelah selesai mengatur posisi dan jumlah item masing-masing widget:
+
+Klik tombol Simpan (ikon disket/save) di pojok kanan bawah halaman Tata Letak Blogger.
+
+Buka tab situs web Anda dan lakukan refresh (Muat Ulang) untuk melihat hasilnya.
+
+ini fila htmlnya
+
+Berdasarkan file HTML yang Anda berikan, untuk membatasi Berita Utama tampil 4 saja di halaman beranda serta menambahkan widget 4 Berita Populer di bawah Kategori Wilayah pada bagian sidebar, Anda perlu melakukan beberapa penyesuaian pada bagian kode HTML (sidebar) dan skrip JavaScript.  
+HTML
+
+Berikut adalah bagian kode yang perlu diubah:
+
+1. Tambahkan Widget "Berita Populer" di Sidebar (HTML)
+Tambahkan blok kode widget Berita Populer di dalam tag <aside> tepat di bawah widget Kategori Wilayah:  
+HTML
+
+HTML
+            <!-- WIDGET BERITA POPULER -->
+            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
+                <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2 text-primary">
+                    <i class="fa-solid fa-fire"></i> <span>Berita Populer</span>
+                </h3>
+                <div id="popularNewsList" class="space-y-3">
+                    <p class="text-xs text-gray-500">Memuat berita populer...</p>
+                </div>
+            </div>
+2. Perbarui Logika JavaScript
+Sesuaikan fungsi renderUI dan renderHomeFeed untuk membatasi berita utama menjadi 4 saja, serta tambahkan fungsi renderPopularNews untuk menampilkan 4 berita populer di sidebar.
+
+Ganti bagian fungsi rendering di dalam tag <script type="module"> dengan kode berikut:  
+HTML
+
+JavaScript
+        function renderUI() {
+            renderHomeFeed(allNewsData);
+            renderPopularNews(allNewsData);
+            renderManageList(allNewsData);
+            renderArchiveList(allNewsData);
+        }
+
+        // Membatasi berita utama hanya 4 saja
+        function renderHomeFeed(data) {
+            const feed = document.getElementById('newsFeed');
+            const published = data.filter(item => item.status === 'published').slice(0, 4);
+            
+            if(published.length === 0) {
+                feed.innerHTML = `<p class="text-gray-500 text-center py-8 col-span-2">Belum ada berita yang dipublikasikan.</p>`;
+                return;
+            }
+
+            feed.innerHTML = "";
+            published.forEach(item => {
+                const dateStr = item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('id-ID', {dateStyle: 'medium'}) : 'Baru saja';
+                feed.innerHTML += `
+                    <article class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 flex flex-col justify-between hover:shadow-lg transition">
+                        <div>
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-48 object-cover">
+                            <div class="p-5 space-y-3">
+                                <div class="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                                    <span class="bg-green-100 dark:bg-green-900 text-primary dark:text-green-300 px-2.5 py-0.5 rounded font-bold">${item.category}</span>
+                                    <span>${dateStr}</span>
+                                </div>
+                                <h3 class="text-lg font-bold line-clamp-2">${item.title}</h3>
+                                <p class="text-gray-600 dark:text-gray-300 text-sm line-clamp-3">${item.content}</p>
+                            </div>
+                        </div>
+                        <div class="p-5 pt-0">
+                            <button onclick="openReadModal('${item.id}')" class="w-full bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white text-gray-800 dark:text-gray-200 py-2 rounded-lg text-sm font-medium transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-book-open"></i> Baca Selengkapnya
+                            </button>
+                        </div>
+                    </article>
+                `;
+            });
+        }
+
+        // Menampilkan 4 Berita Populer di bawah Kategori
+        function renderPopularNews(data) {
+            const popularList = document.getElementById('popularNewsList');
+            if(!popularList) return;
+            
+            const published = data.filter(item => item.status === 'published').slice(0, 4);
+            
+            if(published.length === 0) {
+                popularList.innerHTML = `<p class="text-xs text-gray-500">Belum ada berita populer.</p>`;
+                return;
+            }
+
+            popularList.innerHTML = "";
+            published.forEach((item, index) => {
+                popularList.innerHTML += `
+                    <div class="flex items-start gap-3 cursor-pointer group" onclick="openReadModal('${item.id}')">
+                        <span class="text-base font-black text-primary/60 group-hover:text-primary transition">0${index + 1}</span>
+                        <div>
+                            <h4 class="text-xs font-bold line-clamp-2 group-hover:text-primary transition text-gray-800 dark:text-gray-200">${item.title}</h4>
+                            <span class="text-[10px] text-gray-400">${item.category}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+gabungkan saja jadi satu htmlnya
+
+File index.html Anda telah berhasil diperbarui dan digabungkan menjadi satu file.
+
+Perubahan yang telah diterapkan:
+
+Berita Utama: Pada fungsi renderHomeFeed, telah ditambahkan pembatasan agar hanya menampilkan 4 berita terbaru menggunakan .slice(0, 4).
+
+Widget Berita Populer: Sidebar kini memiliki widget "Berita Populer" di bawah "Kategori Wilayah" yang menampilkan 4 berita (juga dibatasi menggunakan .slice(0, 4)).
+
+File Anda siap digunakan:
+
+Ikon HTML
+index
+ HTML 
+Buka
+
+
+
+Gemini adalah AI dan dapat melakukan kesalahan.
+
 <!DOCTYPE html>
 <html lang="id" class="light">
 <head>
@@ -321,6 +493,16 @@
                 </div>
             </div>
 
+            <!-- WIDGET BERITA POPULER -->
+            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 space-y-3">
+                <h3 class="font-bold text-base border-b pb-2 dark:border-gray-700 flex items-center gap-2 text-primary">
+                    <i class="fa-solid fa-fire"></i> <span>Berita Populer</span>
+                </h3>
+                <div id="popularNewsList" class="space-y-3">
+                    <p class="text-xs text-gray-500">Memuat berita populer...</p>
+                </div>
+            </div>
+
         </aside>
 
     </div>
@@ -472,13 +654,15 @@
 
         function renderUI() {
             renderHomeFeed(allNewsData);
+            renderPopularNews(allNewsData);
             renderManageList(allNewsData);
             renderArchiveList(allNewsData);
         }
 
+        // Membatasi berita utama hanya 4 saja
         function renderHomeFeed(data) {
             const feed = document.getElementById('newsFeed');
-            const published = data.filter(item => item.status === 'published');
+            const published = data.filter(item => item.status === 'published').slice(0, 4);
             
             if(published.length === 0) {
                 feed.innerHTML = `<p class="text-gray-500 text-center py-8 col-span-2">Belum ada berita yang dipublikasikan.</p>`;
@@ -507,6 +691,32 @@
                             </button>
                         </div>
                     </article>
+                `;
+            });
+        }
+
+        // Menampilkan 4 Berita Populer di bawah Kategori
+        function renderPopularNews(data) {
+            const popularList = document.getElementById('popularNewsList');
+            if(!popularList) return;
+            
+            const published = data.filter(item => item.status === 'published').slice(0, 4);
+            
+            if(published.length === 0) {
+                popularList.innerHTML = `<p class="text-xs text-gray-500">Belum ada berita populer.</p>`;
+                return;
+            }
+
+            popularList.innerHTML = "";
+            published.forEach((item, index) => {
+                popularList.innerHTML += `
+                    <div class="flex items-start gap-3 cursor-pointer group" onclick="openReadModal('${item.id}')">
+                        <span class="text-base font-black text-primary/60 group-hover:text-primary transition">0${index + 1}</span>
+                        <div>
+                            <h4 class="text-xs font-bold line-clamp-2 group-hover:text-primary transition text-gray-800 dark:text-gray-200">${item.title}</h4>
+                            <span class="text-[10px] text-gray-400">${item.category}</span>
+                        </div>
+                    </div>
                 `;
             });
         }
@@ -849,3 +1059,5 @@
     </script>
 </body>
 </html>
+index.html
+Menampilkan index.html.
