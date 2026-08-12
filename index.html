@@ -298,7 +298,7 @@
         </div>
     </footer>
 
-    <!-- FIREBASE & LOGIKA APLIKASI -->
+   <!-- FIREBASE & LOGIKA APLIKASI -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -311,7 +311,6 @@
             messagingSenderId: "SENDER_ID",
             appId: "APP_ID"
         };
-
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
