@@ -973,10 +973,11 @@
         function shareArticle(platform) {
             const title = document.getElementById('modalTitle').innerText;
             
-            // Cek jika URL adalah blob (mode preview), ganti ke URL asli web
+            // Ambil URL aktual yang sedang diakses di browser
             let url = window.location.href;
+            
+            // Jika masih berada di lingkungan preview/blob, fallback ke domain utama
             if (url.startsWith('blob:') || url.includes('usercontent')) {
-                // Membuat slug (URL ramah SEO) dari judul berita
                 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
                 url = `https://mediadesaonlininfo.web.id/berita/${slug}`;
             }
@@ -984,7 +985,7 @@
             let shareUrl = '';
 
             if (platform === 'wa') {
-                shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + " - Baca di: " + url)}`;
+                shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + "\n\nBaca selengkapnya di: " + url)}`;
                 window.open(shareUrl, '_blank');
             } else if (platform === 'fb') {
                 shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
