@@ -171,7 +171,7 @@
 
             <!-- Bagian Bawah: Sorotan & Iklan Video Pendek -->
             <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Section Berita Pilihan / Arsip Cepat -->
+                <!-- Section Berita Pilihan / Sorotan Daerah -->
                 <div class="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700">
                     <h3 class="text-lg font-bold mb-4 flex items-center gap-2 border-b pb-2 dark:border-gray-700 text-primary">
                         <i class="fa-solid fa-fire text-amber-500"></i> Sorotan Berita Daerah (6 Terkini)
@@ -201,7 +201,7 @@
             </div>
         </section>
 
-        <!-- VIEW 2: ENTRI & KELOLA BERITA (BLOGGER STYLE CMS) - TERPROTEKSI SANDI -->
+        <!-- VIEW 2: ENTRI & KELOLA BERITA (BLOGGER STYLE CMS) -->
         <section id="view-editor" class="hidden space-y-6">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
                 <div class="flex justify-between items-center border-b pb-3 mb-4 dark:border-gray-700">
@@ -228,7 +228,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-200">Reporter Daerah / Penulis</label>
-                            <input type="text" id="newsReporter" placeholder="Contoh: Ahmad (Reporter Sleman)" class="w-full px-4 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white">
+                            <input type="text" id="newsReporter" placeholder="Contoh: Latif Safruddin" value="Latif Safruddin (Redaksi)" class="w-full px-4 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-200">URL Gambar Utama</label>
@@ -435,8 +435,37 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- JAVASCRIPT LOGIC (SISTEM MANAJEMEN BERITA & PASSWORD) -->
     <script>
+        // Database Berita Awal (Default Sample Data)
+        let defaultNews = [
+            {
+                id: 1,
+                title: "Desa Wisata Pentingsari Sleman Kembangkan Inovasi Digital Berbasis AI",
+                category: "Kabar Desa",
+                reporter: "Latif Safruddin",
+                image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+                content: "Sleman - Desa Wisata Pentingsari di Kabupaten Sleman, D.I. Yogyakarta, terus berkomitmen meningkatkan pelayanan wisatawan melalui penerapan teknologi informasi serta kecerdasan buatan (AI) untuk promosi produk lokal dan desa wisata.\n\nLangkah ini diambil guna memperluas jangkauan pasar hingga kancah internasional, sekaligus memberdayakan ekonomi warga sekitar desa.",
+                date: "16 Agustus 2026",
+                status: "published"
+            },
+            {
+                id: 2,
+                title: "Festival Budaya dan Kuliner Tradisional Jawa Tengah Resmi Dibuka",
+                category: "Kabar Wisata Budaya",
+                reporter: "Aisyah Naziya Almahyra",
+                image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+                content: "Semarang - Berbagai ragam kuliner khas nusantara serta pameran seni budaya tradisional kembali diselenggarakan dalam rangka memperkuat identitas kebudayaan lokal di Jawa Tengah.\n\nAcara yang melibatkan puluhan UMKM desa ini mendapat sambutan antusias dari masyarakat luas serta para pelancong domestik.",
+                date: "15 Agustus 2026",
+                status: "published"
+            }
+        ];
+
+        // Muat data dari localStorage jika ada, atau gunakan default
+        let newsDatabase = JSON.parse(localStorage.getItem('mediaDesaDB')) || defaultNews;
+        let activeCategoryFilter = 'Semua';
+        let currentSearchQuery = '';
+
         // --- Sistem Pengaman Sandi Reporter Daerah ---
         let isReporterLoggedIn = localStorage.getItem('reporterAuth') === 'true';
 
@@ -445,6 +474,7 @@
                 document.getElementById('reporterStatusBadge').classList.remove('hidden');
                 document.getElementById('reporterStatusBadge').classList.add('flex');
             }
+            renderAll();
         });
 
         function checkReporterAccess() {
@@ -476,23 +506,7 @@
             }
         }
 
-        // --- Dark / Light Mode Toggle ---
-        function toggleDarkMode() {
-            const htmlTag = document.documentElement;
-            const themeIcon = document.getElementById('themeIcon');
-            
-            if (htmlTag.classList.contains('dark')) {
-                htmlTag.classList.remove('dark');
-                htmlTag.classList.add('light');
-                themeIcon.classList.replace('fa-sun', 'fa-moon');
-            } else {
-                htmlTag.classList.remove('light');
-                htmlTag.classList.add('dark');
-                themeIcon.classList.replace('fa-moon', 'fa-sun');
-            }
-        }
-
-        // --- Navigasi Tab (Beranda, Editor, Arsip) ---
+        // --- Navigasi Tab ---
         function switchTab(tabId) {
             if (tabId === 'editor' && !isReporterLoggedIn) {
                 checkReporterAccess();
@@ -525,6 +539,292 @@
                 activeBtn.classList.remove('bg-gray-800', 'text-gray-200');
                 activeBtn.classList.add('bg-primary', 'text-white');
             }
+
+            if(tabId === 'home' || tabId === 'archive') {
+                renderAll();
+            }
+        }
+
+        // --- Render Seluruh Konten Berita Dinamis ---
+        function renderAll() {
+            renderHomeFeed();
+            renderTicker();
+            renderArchiveFeed();
+            renderFullArchive();
+            if(isReporterLoggedIn) {
+                renderEditorTable();
+            }
+        }
+
+        // Tampilkan Berita di Beranda (Published)
+        function renderHomeFeed() {
+            const feedContainer = document.getElementById('newsFeed');
+            if(!feedContainer) return;
+
+            let filtered = newsDatabase.filter(item => item.status === 'published');
+
+            if(activeCategoryFilter !== 'Semua') {
+                filtered = filtered.filter(item => item.category.toLowerCase().includes(activeCategoryFilter.toLowerCase()));
+            }
+
+            if(currentSearchQuery.trim() !== '') {
+                filtered = filtered.filter(item => 
+                    item.title.toLowerCase().includes(currentSearchQuery.toLowerCase()) || 
+                    item.content.toLowerCase().includes(currentSearchQuery.toLowerCase())
+                );
+            }
+
+            if(filtered.length === 0) {
+                feedContainer.innerHTML = `<div class="col-span-full py-12 text-center text-gray-500 dark:text-gray-400 font-medium bg-white dark:bg-gray-800 rounded-2xl border dark:border-gray-700">Tidak ada berita ditemukan pada kategori ini.</div>`;
+                return;
+            }
+
+            feedContainer.innerHTML = filtered.map(item => `
+                <div class="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-200 dark:border-gray-700 flex flex-col justify-between hover:shadow-lg transition">
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="${item.image || 'https://placehold.co/600x400/16a34a/ffffff?text=Media+Desa'}" alt="${item.title}" class="w-full h-full object-cover hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/600x400/16a34a/ffffff?text=Media+Desa';">
+                            <span class="absolute top-3 left-3 bg-primary text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-md shadow">${item.category}</span>
+                        </div>
+                        <div class="p-5 space-y-2">
+                            <div class="flex items-center justify-between text-xs text-gray-400">
+                                <span><i class="fa-regular fa-calendar-days mr-1"></i> ${item.date}</span>
+                                <span class="bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded font-semibold text-[10px]"><i class="fa-solid fa-user-pen mr-1"></i>${item.reporter}</span>
+                            </div>
+                            <h2 class="text-lg font-black text-gray-900 dark:text-white line-clamp-2 hover:text-primary transition cursor-pointer" onclick="openReadModal(${item.id})">${item.title}</h2>
+                            <p class="text-xs text-gray-600 dark:text-gray-300 line-clamp-3">${item.content}</p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 flex justify-end">
+                        <button onclick="openReadModal(${item.id})" class="text-xs font-bold text-primary hover:text-primaryDark flex items-center gap-1">
+                            Baca Selengkapnya <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Teks Berjalan Berita (Ticker)
+        function renderTicker() {
+            const ticker = document.getElementById('tickerContent');
+            if(!ticker) return;
+
+            const published = newsDatabase.filter(item => item.status === 'published');
+            if(published.length === 0) {
+                ticker.innerHTML = `<span>Selamat datang di Portal Resmi Media Desa Online Jateng-DIY.</span>`;
+                return;
+            }
+
+            ticker.innerHTML = published.map(item => `
+                <span class="mx-6 cursor-pointer hover:underline" onclick="openReadModal(${item.id})">
+                    <strong class="text-amber-300">[${item.category}]</strong> ${item.title} &bull; 
+                </span>
+            `).join('');
+        }
+
+        // Sorotan Daerah (6 Berita Terkini)
+        function renderArchiveFeed() {
+            const archiveFeed = document.getElementById('archiveFeed');
+            if(!archiveFeed) return;
+
+            const published = newsDatabase.filter(item => item.status === 'published').slice(0, 6);
+            if(published.length === 0) {
+                archiveFeed.innerHTML = `<p class="text-xs text-gray-500">Belum ada sorotan berita.</p>`;
+                return;
+            }
+
+            archiveFeed.innerHTML = published.map(item => `
+                <div class="flex gap-3 items-center bg-gray-50 dark:bg-gray-700/40 p-2.5 rounded-xl border border-gray-100 dark:border-gray-700 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 transition" onclick="openReadModal(${item.id})">
+                    <img src="${item.image || 'https://placehold.co/100x100/16a34a/ffffff?text=Desa'}" class="w-16 h-16 rounded-lg object-cover shrink-0" onerror="this.src='https://placehold.co/100x100/16a34a/ffffff?text=Desa';">
+                    <div>
+                        <span class="text-[10px] font-bold text-primary uppercase">${item.category}</span>
+                        <h4 class="text-xs font-bold text-gray-900 dark:text-white line-clamp-2">${item.title}</h4>
+                        <span class="text-[10px] text-gray-400">${item.date}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Arsip Terpadu Lengkap
+        function renderFullArchive() {
+            const archiveList = document.getElementById('archiveNewsList');
+            if(!archiveList) return;
+
+            const published = newsDatabase.filter(item => item.status === 'published');
+            if(published.length === 0) {
+                archiveList.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500">Arsip berita masih kosong.</div>`;
+                return;
+            }
+
+            archiveList.innerHTML = published.map(item => `
+                <div class="bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] bg-primary/10 text-primary font-bold px-2 py-0.5 rounded uppercase">${item.category}</span>
+                        <h4 class="font-bold text-sm text-gray-900 dark:text-white mt-2 line-clamp-2">${item.title}</h4>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">${item.content}</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t dark:border-gray-600 flex justify-between items-center text-xs">
+                        <span class="text-gray-400">${item.date}</span>
+                        <button onclick="openReadModal(${item.id})" class="text-primary font-bold hover:underline">Baca &rarr;</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Tabel Kelola Berita (Editor / CMS)
+        function renderEditorTable() {
+            const tbody = document.getElementById('editorNewsList');
+            if(!tbody) return;
+
+            if(newsDatabase.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-6 text-center text-gray-500">Belum ada entri berita.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = newsDatabase.map(item => `
+                <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                    <td class="px-4 py-3 text-xs text-gray-500">${item.date}</td>
+                    <td class="px-4 py-3 font-bold text-gray-900 dark:text-white line-clamp-1">${item.title}</td>
+                    <td class="px-4 py-3 text-xs"><span class="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">${item.category}</span></td>
+                    <td class="px-4 py-3 text-xs">
+                        <span class="px-2 py-0.5 rounded font-bold uppercase text-[10px] ${item.status === 'published' ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' : 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300'}">
+                            ${item.status}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-right space-x-2">
+                        <button onclick="editNews(${item.id})" class="text-amber-600 hover:text-amber-800 font-bold text-xs" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteNews(${item.id})" class="text-red-600 hover:text-red-800 font-bold text-xs" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // --- Logika Formulir Tambah/Edit Berita ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const docId = document.getElementById('editDocId').value;
+            const title = document.getElementById('newsTitle').value;
+            const category = document.getElementById('newsCategory').value;
+            const reporter = document.getElementById('newsReporter').value || 'Latif Safruddin';
+            const image = document.getElementById('newsImage').value;
+            const content = document.getElementById('newsContent').value;
+            const status = document.getElementById('newsStatus').value;
+
+            const currentDate = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
+            if(docId) {
+                // Update berita lama
+                newsDatabase = newsDatabase.map(item => {
+                    if(item.id == docId) {
+                        return { ...item, title, category, reporter, image, content, status };
+                    }
+                    return item;
+                });
+                alert("Berita berhasil diperbarui!");
+            } else {
+                // Tambah berita baru
+                const newObj = {
+                    id: Date.now(),
+                    title,
+                    category,
+                    reporter,
+                    image,
+                    content,
+                    date: currentDate,
+                    status
+                };
+                newsDatabase.unshift(newObj);
+                alert(status === 'published' ? "Berita berhasil diterbitkan ke Portal!" : "Berita berhasil disimpan sebagai draf.");
+            }
+
+            localStorage.setItem('mediaDesaDB', JSON.stringify(newsDatabase));
+            resetNewsForm();
+            renderAll();
+            switchTab('home');
+        }
+
+        function saveNewsStatus(status) {
+            document.getElementById('newsStatus').value = status;
+        }
+
+        function editNews(id) {
+            const item = newsDatabase.find(n => n.id == id);
+            if(!item) return;
+
+            document.getElementById('editDocId').value = item.id;
+            document.getElementById('newsTitle').value = item.title;
+            document.getElementById('newsCategory').value = item.category;
+            document.getElementById('newsReporter').value = item.reporter;
+            document.getElementById('newsImage').value = item.image;
+            document.getElementById('newsContent').value = item.content;
+            document.getElementById('newsStatus').value = item.status;
+
+            document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit Berita';
+            document.getElementById('cancelEditBtn').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function deleteNews(id) {
+            if(confirm("Apakah Anda yakin ingin menghapus berita ini?")) {
+                newsDatabase = newsDatabase.filter(n => n.id != id);
+                localStorage.setItem('mediaDesaDB', JSON.stringify(newsDatabase));
+                renderAll();
+            }
+        }
+        
+        function resetNewsForm() {
+            document.getElementById('newsForm').reset();
+            document.getElementById('editDocId').value = '';
+            document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-feather-pointed"></i> Entri Berita Baru';
+            document.getElementById('cancelEditBtn').classList.add('hidden');
+        }
+
+        // --- Filter Kategori & Pencarian ---
+        function filterRegion(region) {
+            activeCategoryFilter = region;
+            document.querySelectorAll('.region-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-200');
+            });
+            
+            const activeBtn = document.getElementById(`filter-${region}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-gray-100', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-200');
+                activeBtn.classList.add('bg-primary', 'text-white');
+            }
+            renderHomeFeed();
+        }
+
+        function handleSearchInput() {
+            currentSearchQuery = document.getElementById('searchNewsInput').value;
+            renderHomeFeed();
+        }
+
+        // --- Modal Baca Berita Lengkap ---
+        function openReadModal(id) {
+            const item = newsDatabase.find(n => n.id == id);
+            if(!item) return;
+
+            document.getElementById('modalCategory').innerText = item.category;
+            document.getElementById('modalDate').innerText = item.date;
+            document.getElementById('modalReporterText').innerText = item.reporter;
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalContent').innerText = item.content;
+
+            const imgContainer = document.getElementById('modalImageContainer');
+            const imgEl = document.getElementById('modalImage');
+            if(item.image) {
+                imgEl.src = item.image;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+
+            document.getElementById('readModal').classList.remove('hidden');
+        }
+
+        function closeReadModal() {
+            document.getElementById('readModal').classList.add('hidden');
         }
 
         // --- Multi-Language Support (ID, JV, EN) ---
@@ -544,54 +844,13 @@
             });
         }
 
-        // --- Kontrol Modal ---
+        // --- Kontrol Modal Redaksi ---
         function openRedaksiModal() {
             document.getElementById('redaksiModal').classList.remove('hidden');
         }
 
         function closeRedaksiModal() {
             document.getElementById('redaksiModal').classList.add('hidden');
-        }
-
-        function closeReadModal() {
-            document.getElementById('readModal').classList.add('hidden');
-        }
-
-        // --- Fungsi Filter Kategori ---
-        function filterRegion(region) {
-            document.querySelectorAll('.region-btn').forEach(btn => {
-                btn.classList.remove('bg-primary', 'text-white');
-                btn.classList.add('bg-gray-100', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-200');
-            });
-            
-            const activeBtn = document.getElementById(`filter-${region}`);
-            if(activeBtn) {
-                activeBtn.classList.remove('bg-gray-100', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-200');
-                activeBtn.classList.add('bg-primary', 'text-white');
-            }
-        }
-
-        // --- Fungsi Dummy untuk Form & Pencarian ---
-        function handleSearchInput() {
-            const query = document.getElementById('searchNewsInput').value;
-            console.log("Mencari berita: " + query);
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            alert("Berita berhasil disimpan atau diterbitkan!");
-            document.getElementById('newsForm').reset();
-        }
-
-        function saveNewsStatus(status) {
-            document.getElementById('newsStatus').value = status;
-            document.getElementById('newsForm').dispatchEvent(new Event('submit'));
-        }
-        
-        function resetNewsForm() {
-            document.getElementById('newsForm').reset();
-            document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-feather-pointed"></i> Entri Berita Baru';
-            document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
         function shareArticle(platform) {
@@ -602,6 +861,21 @@
             } else if (platform === 'copy') {
                 navigator.clipboard.writeText(window.location.href);
                 alert('Tautan disalin!');
+            }
+        }
+
+        function toggleDarkMode() {
+            const htmlTag = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
+            
+            if (htmlTag.classList.contains('dark')) {
+                htmlTag.classList.remove('dark');
+                htmlTag.classList.add('light');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                htmlTag.classList.remove('light');
+                htmlTag.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
             }
         }
     </script>
