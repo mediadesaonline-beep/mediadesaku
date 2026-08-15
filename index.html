@@ -100,7 +100,7 @@
                 <button onclick="switchTab('home')" id="tabBtn-home" class="px-4 py-2 rounded-lg font-semibold bg-primary text-white transition flex items-center gap-2 shadow-sm text-sm">
                     <i class="fa-solid fa-newspaper"></i> <span id="navHome">Beranda Berita</span>
                 </button>
-                <button onclick="switchTab('editor')" id="tabBtn-editor" class="px-4 py-2 rounded-lg font-semibold bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2 text-sm">
+                <button onclick="checkReporterAccess()" id="tabBtn-editor" class="px-4 py-2 rounded-lg font-semibold bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2 text-sm">
                     <i class="fa-solid fa-pen-to-square"></i> <span id="navEditor">Reporter Daerah</span>
                 </button>
                 <button onclick="switchTab('archive')" id="tabBtn-archive" class="px-4 py-2 rounded-lg font-semibold bg-gray-800 hover:bg-gray-700 text-gray-200 transition flex items-center gap-2 text-sm">
@@ -166,12 +166,12 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" id="newsFeed">
-                <!-- Diisi secara dinamis oleh JavaScript (maksimal 4) -->
+                <!-- Diisi secara dinamis oleh JavaScript -->
             </div>
 
             <!-- Bagian Bawah: Sorotan & Iklan Video Pendek -->
             <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Section Berita Pilihan / Arsip Cepat (Sorotan Daerah tampil 6) -->
+                <!-- Section Berita Pilihan / Arsip Cepat -->
                 <div class="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700">
                     <h3 class="text-lg font-bold mb-4 flex items-center gap-2 border-b pb-2 dark:border-gray-700 text-primary">
                         <i class="fa-solid fa-fire text-amber-500"></i> Sorotan Berita Daerah (6 Terkini)
@@ -201,7 +201,7 @@
             </div>
         </section>
 
-        <!-- VIEW 2: ENTRI & KELOLA BERITA (BLOGGER STYLE CMS) -->
+        <!-- VIEW 2: ENTRI & KELOLA BERITA (BLOGGER STYLE CMS) - TERPROTEKSI SANDI -->
         <section id="view-editor" class="hidden space-y-6">
             <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
                 <div class="flex justify-between items-center border-b pb-3 mb-4 dark:border-gray-700">
@@ -228,7 +228,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-200">Reporter Daerah / Penulis</label>
-                            <input type="text" id="newsReporter" placeholder="Contoh: Ahmad (Reporter Sleman)" class="w-full px-4 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white" readonly>
+                            <input type="text" id="newsReporter" placeholder="Contoh: Ahmad (Reporter Sleman)" class="w-full px-4 py-2 border rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white">
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-200">URL Gambar Utama</label>
@@ -437,6 +437,45 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        // --- Sistem Pengaman Sandi Reporter Daerah ---
+        let isReporterLoggedIn = localStorage.getItem('reporterAuth') === 'true';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (isReporterLoggedIn) {
+                document.getElementById('reporterStatusBadge').classList.remove('hidden');
+                document.getElementById('reporterStatusBadge').classList.add('flex');
+            }
+        });
+
+        function checkReporterAccess() {
+            if (isReporterLoggedIn) {
+                switchTab('editor');
+            } else {
+                let passwordInput = prompt("Masukkan Sandi Akses Reporter Daerah:");
+                if (passwordInput === "media123") {
+                    isReporterLoggedIn = true;
+                    localStorage.setItem('reporterAuth', 'true');
+                    document.getElementById('reporterStatusBadge').classList.remove('hidden');
+                    document.getElementById('reporterStatusBadge').classList.add('flex');
+                    alert("Akses Berhasil! Selamat datang di Panel Reporter Daerah.");
+                    switchTab('editor');
+                } else if (passwordInput !== null) {
+                    alert("Sandi salah! Akses ditolak, khusus Redaksi.");
+                }
+            }
+        }
+
+        function reporterLogout() {
+            if (confirm("Keluar dari Mode Reporter Daerah?")) {
+                isReporterLoggedIn = false;
+                localStorage.removeItem('reporterAuth');
+                document.getElementById('reporterStatusBadge').classList.remove('flex');
+                document.getElementById('reporterStatusBadge').classList.add('hidden');
+                switchTab('home');
+                alert("Anda telah keluar dari mode reporter.");
+            }
+        }
+
         // --- Dark / Light Mode Toggle ---
         function toggleDarkMode() {
             const htmlTag = document.documentElement;
@@ -455,10 +494,18 @@
 
         // --- Navigasi Tab (Beranda, Editor, Arsip) ---
         function switchTab(tabId) {
+            if (tabId === 'editor' && !isReporterLoggedIn) {
+                checkReporterAccess();
+                return;
+            }
+
             const tabs = ['home', 'editor', 'archive'];
             tabs.forEach(tab => {
-                document.getElementById(`view-${tab}`).classList.add('hidden');
-                document.getElementById(`view-${tab}`).classList.remove('block');
+                const viewEl = document.getElementById(`view-${tab}`);
+                if(viewEl) {
+                    viewEl.classList.add('hidden');
+                    viewEl.classList.remove('block');
+                }
                 
                 const btn = document.getElementById(`tabBtn-${tab}`);
                 if(btn) {
@@ -467,8 +514,11 @@
                 }
             });
 
-            document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            document.getElementById(`view-${tabId}`).classList.add('block');
+            const targetView = document.getElementById(`view-${tabId}`);
+            if(targetView) {
+                targetView.classList.remove('hidden');
+                targetView.classList.add('block');
+            }
             
             const activeBtn = document.getElementById(`tabBtn-${tabId}`);
             if(activeBtn) {
@@ -492,7 +542,6 @@
                     }
                 }
             });
-            // Implementasi pergantian teks sesuai bahasa ID / JV / EN dapat ditambahkan di sini
         }
 
         // --- Kontrol Modal ---
