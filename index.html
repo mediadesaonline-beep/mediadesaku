@@ -434,25 +434,26 @@
         </div>
     </div>
 
-    <!-- FIREBASE SDK (SINKRONISASI CLOUD LINTAS BROWSER) -->
+    <!-- SCRIPT UTAMA & INTEGRASI FIREBASE CLOUD -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Konfigurasi Firebase Anda (Ganti dengan kredensial project Firebase Anda jika ada, atau gunakan mode publik demo ini)
+        // Konfigurasi Firebase Asli Anda
         const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForDemoMediaDesaOnline",
-            authDomain: "mediadesaonline-jatengdiy.firebaseapp.com",
-            projectId: "mediadesaonline-jatengdiy",
-            storageBucket: "mediadesaonline-jatengdiy.appspot.com",
-            messagingSenderId: "1234567890",
-            appId: "1:1234567890:web:abcdef"
+            apiKey: "AIzaSyCThldfug-OeBy6AVfYa9C1S-KrZqR7A3U",
+            authDomain: "media-desa-online.firebaseapp.com",
+            projectId: "media-desa-online",
+            storageBucket: "media-desa-online.firebasestorage.app",
+            messagingSenderId: "824125231737",
+            appId: "1:824125231737:web:529291c09037322e593aa8",
+            measurementId: "G-6VH2G8Q8VP"
         };
 
-        // Fallback Database Lokal jika Firebase belum diatur penuh, atau integrasi cloud real-time
-        let app, db;
+        // Inisialisasi Firebase & Firestore
+        let db = null;
         try {
-            app = initializeApp(firebaseConfig);
+            const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
         } catch(e) {
             console.warn("Menggunakan mode local fallback & cloud sync adapter.");
@@ -754,7 +755,6 @@
                     }
                     await fetchCloudData();
                 } else {
-                    // Fallback jika database cloud belum aktif
                     if(docId !== "") {
                         newsDatabase = newsDatabase.map(item => item.id == docId ? { ...item, ...newsData } : item);
                     } else {
