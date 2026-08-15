@@ -215,7 +215,6 @@
 
                 <form id="newsForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
                     <input type="hidden" id="editDocId">
-                    <input type="hidden" id="newsStatus" value="published">
                     
                     <div>
                         <label class="block text-sm font-semibold mb-1 text-gray-700 dark:text-gray-200">Judul Berita *</label>
@@ -241,10 +240,10 @@
                     </div>
 
                     <div class="flex flex-wrap items-center justify-end gap-3 pt-2">
-                        <button type="button" onclick="saveNewsStatus('draft')" class="px-5 py-2.5 rounded-xl font-bold bg-amber-500 hover:bg-amber-600 text-gray-900 transition flex items-center gap-2 shadow text-sm">
+                        <button type="button" onclick="submitNewsWithStatus('draft')" class="px-5 py-2.5 rounded-xl font-bold bg-amber-500 hover:bg-amber-600 text-gray-900 transition flex items-center gap-2 shadow text-sm">
                             <i class="fa-solid fa-floppy-disk"></i> Simpan Draf
                         </button>
-                        <button type="button" onclick="saveNewsStatus('published')" class="px-6 py-2.5 rounded-xl font-extrabold bg-primary hover:bg-primaryDark text-white transition flex items-center gap-2 shadow-md text-sm">
+                        <button type="button" onclick="submitNewsWithStatus('published')" class="px-6 py-2.5 rounded-xl font-extrabold bg-primary hover:bg-primaryDark text-white transition flex items-center gap-2 shadow-md text-sm">
                             <i class="fa-solid fa-paper-plane"></i> Terbitkan Sekarang
                         </button>
                     </div>
@@ -499,8 +498,7 @@
             if (confirm("Keluar dari Mode Reporter Daerah?")) {
                 isReporterLoggedIn = false;
                 localStorage.removeItem('reporterAuth');
-                document.getElementById('reporterStatusBadge').classList.remove('flex');
-                document.getElementById('reporterStatusBadge').classList.add('hidden');
+                document.getElementById('reporterStatusBadge').classList.replace('flex', 'hidden');
                 switchTab('home');
                 alert("Anda telah keluar dari mode reporter.");
             }
@@ -700,6 +698,19 @@
         }
 
         // --- Logika Formulir Tambah/Edit Berita ---
+        let currentFormStatus = 'published';
+
+        function submitNewsWithStatus(status) {
+            currentFormStatus = status;
+            const form = document.getElementById('newsForm');
+            if(form.checkValidity()) {
+                // Buat event submit buatan agar fungsi handleFormSubmit tereksekusi dengan benar
+                handleFormSubmit(new Event('submit'));
+            } else {
+                form.reportValidity();
+            }
+        }
+
         function handleFormSubmit(e) {
             e.preventDefault();
             const docId = document.getElementById('editDocId').value;
@@ -708,12 +719,12 @@
             const reporter = document.getElementById('newsReporter').value || 'Latif Safruddin';
             const image = document.getElementById('newsImage').value;
             const content = document.getElementById('newsContent').value;
-            const status = document.getElementById('newsStatus').value;
+            const status = currentFormStatus;
 
             const currentDate = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
-            if(docId) {
-                // Update berita lama
+            if(docId !== "") {
+                // Update berita lama berdasarkan ID
                 newsDatabase = newsDatabase.map(item => {
                     if(item.id == docId) {
                         return { ...item, title, category, reporter, image, content, status };
@@ -743,10 +754,6 @@
             switchTab('home');
         }
 
-        function saveNewsStatus(status) {
-            document.getElementById('newsStatus').value = status;
-        }
-
         function editNews(id) {
             const item = newsDatabase.find(n => n.id == id);
             if(!item) return;
@@ -757,7 +764,7 @@
             document.getElementById('newsReporter').value = item.reporter;
             document.getElementById('newsImage').value = item.image;
             document.getElementById('newsContent').value = item.content;
-            document.getElementById('newsStatus').value = item.status;
+            currentFormStatus = item.status;
 
             document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit Berita';
             document.getElementById('cancelEditBtn').classList.remove('hidden');
@@ -775,6 +782,7 @@
         function resetNewsForm() {
             document.getElementById('newsForm').reset();
             document.getElementById('editDocId').value = '';
+            currentFormStatus = 'published';
             document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-feather-pointed"></i> Entri Berita Baru';
             document.getElementById('cancelEditBtn').classList.add('hidden');
         }
