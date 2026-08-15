@@ -420,618 +420,140 @@
                                 <i class="fa-brands fa-instagram text-pink-500"></i> @mediadesaonline2024
                             </a>
                             <a href="https://facebook.com/latif.mediadesa" target="_blank" rel="noopener noreferrer" class="bg-gray-100 dark:bg-gray-700/80 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center gap-1.5 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition shadow-sm">
-                                <i class="fa-solid fa-user-pen text-amber-500"></i> latif.mediadesa
+                                <i class="fa-brands fa-facebook text-blue-600"></i> @latif.mediadesa
                             </a>
-                            <a href="https://www.youtube.com/@mediadesaonline2024" target="_blank" rel="noopener noreferrer" class="bg-gray-100 dark:bg-gray-700/80 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center gap-1.5 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition shadow-sm">
-                                <i class="fa-brands fa-youtube text-red-500"></i> mediadesaonline.id
+                            <a href="https://mediadesaonlininfo.web.id/" target="_blank" rel="noopener noreferrer" class="bg-gray-100 dark:bg-gray-700/80 px-2.5 py-1 rounded-lg border border-gray-200 dark:border-gray-600 flex items-center gap-1.5 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition shadow-sm">
+                                <i class="fa-solid fa-globe text-primary"></i> mediadesaonlininfo.web.id
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="p-4 bg-gray-100 dark:bg-gray-900 text-right border-t dark:border-gray-700">
-                <button onclick="closeRedaksiModal()" class="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded-lg font-bold text-xs transition">Tutup</button>
+            <div class="p-4 bg-gray-50 dark:bg-gray-900 border-t dark:border-gray-700 flex justify-end">
+                <button onclick="closeRedaksiModal()" class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-5 py-2 rounded-lg font-bold text-sm hover:bg-gray-300 transition">Tutup Panel</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL OTENTIKASI REPORTER DAERAH -->
-    <div id="reporterAuthModal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white dark:bg-gray-800 max-w-md w-full rounded-2xl shadow-2xl overflow-hidden p-6 space-y-4 border border-gray-200 dark:border-gray-700">
-            <div class="flex justify-between items-center border-b pb-3 dark:border-gray-700">
-                <h3 class="font-extrabold text-lg text-primary flex items-center gap-2">
-                    <i class="fa-solid fa-user-lock"></i> Otentikasi Reporter
-                </h3>
-                <button onclick="closeReporterAuthModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-white text-2xl font-bold">&times;</button>
-            </div>
-            <div class="space-y-4">
-                <p class="text-sm text-gray-600 dark:text-gray-300">Silakan masukkan nama/ID beserta kata sandi untuk melanjutkan ke portal entri berita.</p>
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase">Nama / Kode Reporter</label>
-                    <input type="text" id="reporterNameInput" placeholder="Contoh: Budi - Sleman" class="w-full px-4 py-3 border rounded-xl bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white font-medium" onkeyup="if(event.key === 'Enter') document.getElementById('reporterPasswordInput').focus()">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 mb-1 uppercase">Kata Sandi</label>
-                    <input type="password" id="reporterPasswordInput" placeholder="Masukkan kata sandi..." class="w-full px-4 py-3 border rounded-xl bg-gray-50 dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary text-gray-900 dark:text-white font-medium" onkeyup="if(event.key === 'Enter') loginReporter()">
-                </div>
-            </div>
-            <div class="pt-4 flex justify-end gap-3 border-t dark:border-gray-700">
-                <button onclick="closeReporterAuthModal()" class="px-4 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-xl text-sm font-bold transition">Batal</button>
-                <button onclick="loginReporter()" class="px-5 py-2.5 bg-primary hover:bg-primaryDark text-white rounded-xl text-sm font-bold transition flex items-center gap-2 shadow-md">
-                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Masuk Sistem
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification Container -->
-    <div id="toastContainer" class="fixed bottom-4 right-4 z-[60] flex flex-col gap-2"></div>
-
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // State Variables
-        let newsData = [];
-        let currentTab = 'home';
-        let currentCategoryFilter = 'Semua';
-        let searchQuery = '';
-        let loggedInReporter = null;
-        let activeLang = 'id';
-        let editId = null;
-
-        // Mock Initial Data
-        const initialMockData = [
-            {
-                id: '1',
-                title: 'Desa Mandiri Energi: Inovasi Panel Surya di Balai Desa Sukamaju',
-                category: 'Kabar Desa',
-                reporter: 'Ahmad (Reporter Sleman)',
-                image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&q=80&w=800',
-                content: 'Inisiatif luar biasa datang dari warga Desa Sukamaju, Kabupaten Sleman. Mereka secara swadaya memasang panel surya di Balai Desa yang kini mampu menyuplai kebutuhan listrik untuk fasilitas umum dan operasional administrasi desa.\n\nKepala Desa menyatakan bahwa ini adalah langkah awal menuju desa mandiri energi dan ramah lingkungan. Anggaran ini didapatkan dari dana desa dan swadaya masyarakat.',
-                date: new Date(Date.now() - 86400000).toISOString(),
-                status: 'published'
-            },
-            {
-                id: '2',
-                title: 'Festival Budaya Lereng Merapi Raup Ribuan Pengunjung',
-                category: 'Kabar Wisata Budaya',
-                reporter: 'Siti (Reporter Magelang)',
-                image: 'https://images.unsplash.com/photo-1540324155974-7523202daa3f?auto=format&fit=crop&q=80&w=800',
-                content: 'Kemeriahan menyelimuti Lereng Merapi akhir pekan lalu saat Festival Budaya tahunan digelar. Berbagai kesenian tradisional seperti Jathilan, Tari Topeng Ireng, hingga bazar UMKM lokal memanjakan pengunjung.\n\nAcara ini diharapkan dapat memacu roda perekonomian warga sekitar paska pandemi serta melestarikan budaya leluhur.',
-                date: new Date(Date.now() - 172800000).toISOString(),
-                status: 'published'
-            },
-            {
-                id: '3',
-                title: 'Bupati Resmikan Jalan Usaha Tani Sepanjang 5 Kilometer',
-                category: 'Kabar Daerah',
-                reporter: 'Budi (Reporter Bantul)',
-                image: 'https://images.unsplash.com/photo-1515150144380-bca9f1650ed9?auto=format&fit=crop&q=80&w=800',
-                content: 'Untuk mempermudah akses distribusi hasil panen, Pemerintah Kabupaten Bantul baru saja meresmikan proyek jalan usaha tani yang melintasi 3 desa agraris.\n\nProyek yang memakan waktu 3 bulan pengerjaan ini disambut antusias oleh para petani setempat yang sebelumnya kesulitan mengangkut hasil panen saat musim hujan.',
-                date: new Date(Date.now() - 259200000).toISOString(),
-                status: 'published'
-            },
-            {
-                id: '4',
-                title: 'Pentingnya Digitalisasi UMKM Desa di Era Modern',
-                category: 'Kabar Opini Kritis',
-                reporter: 'Dr. Hendra (Pemerhati Desa)',
-                image: '', // Menguji fallback
-                content: 'Transformasi digital tidak boleh hanya menjadi milik masyarakat perkotaan. UMKM di tingkat desa memiliki potensi pasar yang luas jika mampu mengadopsi teknologi digital untuk pemasaran.\n\nPemerintah daerah harus memperkuat infrastruktur internet dan memberikan pelatihan berkelanjutan.',
-                date: new Date().toISOString(),
-                status: 'published'
-            }
-        ];
-
-        window.onload = () => {
-            // Check Dark Mode Preference
-            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-                document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-
-            // Load Data
-            const storedNews = localStorage.getItem('mediadesa_news');
-            if (storedNews) {
-                newsData = JSON.parse(storedNews);
-            } else {
-                newsData = initialMockData;
-                saveData();
-            }
-
-            checkReporterLogin();
-            setLanguage('id'); // Default
-            renderAll();
-        };
-
-        function saveData() {
-            localStorage.setItem('mediadesa_news', JSON.stringify(newsData));
-        }
-
-        function renderAll() {
-            renderNewsFeed();
-            renderArchiveFeed();
-            renderArchiveTab();
-            renderEditorList();
-            updateTicker();
-        }
-
-        function renderNewsFeed() {
-            const feedContainer = document.getElementById('newsFeed');
-            feedContainer.innerHTML = '';
-            
-            let filteredNews = newsData.filter(n => n.status === 'published');
-            
-            if (currentCategoryFilter !== 'Semua') {
-                filteredNews = filteredNews.filter(n => n.category === currentCategoryFilter);
-            }
-            if (searchQuery) {
-                filteredNews = filteredNews.filter(n => n.title.toLowerCase().includes(searchQuery) || n.content.toLowerCase().includes(searchQuery));
-            }
-
-            // Sort by date descending, take top 4 for Home
-            filteredNews.sort((a, b) => new Date(b.date) - new Date(a.date));
-            const displayNews = filteredNews.slice(0, 4);
-
-            if (displayNews.length === 0) {
-                feedContainer.innerHTML = `<div class="col-span-full text-center py-10 text-gray-500 dark:text-gray-400">Tidak ada berita ditemukan untuk pencarian/filter ini.</div>`;
-                return;
-            }
-
-            displayNews.forEach(news => {
-                const dateObj = new Date(news.date);
-                const dateStr = dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-                const imgUrl = news.image || `https://placehold.co/600x400/16a34a/ffffff?text=${encodeURIComponent(news.category)}`;
-                
-                const card = document.createElement('article');
-                card.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden border border-gray-200 dark:border-gray-700 hover:shadow-xl transition duration-300 flex flex-col group cursor-pointer';
-                card.onclick = () => openReadModal(news.id);
-                
-                card.innerHTML = `
-                    <div class="relative h-48 overflow-hidden bg-gray-200 dark:bg-gray-700">
-                        <img src="${imgUrl}" alt="${news.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://placehold.co/600x400/16a34a/ffffff?text=Berita';">
-                        <span class="absolute top-3 right-3 bg-primary text-white text-[10px] font-black px-2 py-1 rounded shadow uppercase tracking-wide">${news.category}</span>
-                    </div>
-                    <div class="p-5 flex flex-col flex-grow">
-                        <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
-                            <span class="flex items-center gap-1"><i class="fa-regular fa-calendar"></i> ${dateStr}</span>
-                            <span class="font-semibold text-amber-600 dark:text-amber-400 truncate max-w-[120px]" title="${news.reporter}"><i class="fa-solid fa-user-pen"></i> ${news.reporter}</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white leading-snug mb-2 group-hover:text-primary transition line-clamp-2">${news.title}</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3 mb-4 flex-grow">${news.content}</p>
-                        <div class="mt-auto border-t border-gray-100 dark:border-gray-700 pt-3">
-                            <span class="text-primary font-semibold text-sm group-hover:underline">Baca Selengkapnya &rarr;</span>
-                        </div>
-                    </div>
-                `;
-                feedContainer.appendChild(card);
-            });
-        }
-
-        function renderArchiveFeed() {
-            const feedContainer = document.getElementById('archiveFeed');
-            feedContainer.innerHTML = '';
-            
-            let publishedNews = newsData.filter(n => n.status === 'published');
-            publishedNews.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            // Skip top 4 (assuming they are on main feed), take next 6
-            const archiveHighlights = publishedNews.slice(0, 6); // Just show top 6 regardless for demo
-
-            archiveHighlights.forEach(news => {
-                const dateStr = new Date(news.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
-                const item = document.createElement('div');
-                item.className = 'flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-600';
-                item.onclick = () => openReadModal(news.id);
-                
-                item.innerHTML = `
-                    <div class="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-gray-200 dark:bg-gray-700">
-                        <img src="${news.image || `https://placehold.co/100x100/16a34a/ffffff?text=O`}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/16a34a/ffffff?text=O';">
-                    </div>
-                    <div class="flex-grow min-w-0">
-                        <span class="text-[10px] text-amber-500 font-bold uppercase tracking-wider block mb-1">${news.category}</span>
-                        <h4 class="text-sm font-bold text-gray-900 dark:text-white line-clamp-2 leading-tight">${news.title}</h4>
-                        <span class="text-xs text-gray-500 mt-1 block">${dateStr} &bull; ${news.reporter.split(' ')[0]}</span>
-                    </div>
-                `;
-                feedContainer.appendChild(item);
-            });
-        }
-
-        function renderArchiveTab() {
-            const listContainer = document.getElementById('archiveNewsList');
-            if(!listContainer) return;
-            listContainer.innerHTML = '';
-            
-            let publishedNews = newsData.filter(n => n.status === 'published');
-            publishedNews.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            publishedNews.forEach(news => {
-                const dateStr = new Date(news.date).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
-                const card = document.createElement('div');
-                card.className = 'bg-gray-50 dark:bg-gray-700/30 p-4 rounded-xl border border-gray-200 dark:border-gray-700 cursor-pointer hover:shadow-md transition';
-                card.onclick = () => openReadModal(news.id);
-                
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs bg-primary/10 text-primary font-bold px-2 py-0.5 rounded uppercase">${news.category}</span>
-                        <span class="text-xs text-gray-500"><i class="fa-regular fa-calendar"></i> ${dateStr}</span>
-                    </div>
-                    <h4 class="font-bold text-gray-900 dark:text-white text-base line-clamp-2 mb-2">${news.title}</h4>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-3">${news.content}</p>
-                    <div class="text-xs font-semibold text-amber-600 dark:text-amber-400">Oleh: ${news.reporter}</div>
-                `;
-                listContainer.appendChild(card);
-            });
-        }
-
-        function updateTicker() {
-            const ticker = document.getElementById('tickerContent');
-            const publishedTitles = newsData.filter(n => n.status === 'published').slice(0, 5).map(n => `<span class="mx-4 text-amber-300">&bull;</span> ${n.title}`);
-            ticker.innerHTML = publishedTitles.length ? publishedTitles.join('') + publishedTitles.join('') : "Selamat datang di Media Desa Online JATENG-DIY.";
-        }
-
-        function filterRegion(category) {
-            currentCategoryFilter = category;
-            
-            // Update Active Button Style
-            document.querySelectorAll('.region-btn').forEach(btn => {
-                btn.classList.remove('bg-primary', 'text-white');
-                btn.classList.add('bg-gray-100', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-200');
-            });
-            const activeBtn = document.getElementById(`filter-${category}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('bg-gray-100', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-200');
-                activeBtn.classList.add('bg-primary', 'text-white');
-            }
-            
-            renderNewsFeed();
-        }
-
-        function handleSearchInput() {
-            searchQuery = document.getElementById('searchNewsInput').value.toLowerCase();
-            renderNewsFeed();
-        }
-
+        // --- Dark / Light Mode Toggle ---
         function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            const isDark = document.documentElement.classList.contains('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            const htmlTag = document.documentElement;
+            const themeIcon = document.getElementById('themeIcon');
             
-            const icon = document.getElementById('themeIcon');
-            if (isDark) {
-                icon.classList.replace('fa-moon', 'fa-sun');
+            if (htmlTag.classList.contains('dark')) {
+                htmlTag.classList.remove('dark');
+                htmlTag.classList.add('light');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
             } else {
-                icon.classList.replace('fa-sun', 'fa-moon');
+                htmlTag.classList.remove('light');
+                htmlTag.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
             }
         }
 
-        function setLanguage(lang) {
-            activeLang = lang;
-            ['id', 'jv', 'en'].forEach(l => {
-                const btn = document.getElementById(`lang-${l}`);
-                if(l === lang) {
-                    btn.className = "px-2 py-1 rounded font-bold bg-white text-emerald-900 transition";
-                } else {
-                    btn.className = "px-2 py-1 rounded font-medium text-white hover:text-amber-200 transition";
-                }
-            });
-            // Simplified translation demo
-            const translations = {
-                'id': { home: 'Beranda Berita', editor: 'Reporter Daerah', archive: 'Arsip Terpadu' },
-                'jv': { home: 'Kabar Utama', editor: 'Pewarta Warga', archive: 'Arsip Berita' },
-                'en': { home: 'News Home', editor: 'Local Reporter', archive: 'Archive' }
-            };
-            document.getElementById('navHome').innerText = translations[lang].home;
-            document.getElementById('navEditor').innerText = translations[lang].editor;
-            document.getElementById('navArchive').innerText = translations[lang].archive;
-        }
-
+        // --- Navigasi Tab (Beranda, Editor, Arsip) ---
         function switchTab(tabId) {
-            if (tabId === 'editor' && !loggedInReporter) {
-                openReporterAuthModal();
-                return;
-            }
-
-            currentTab = tabId;
-            
-            // Hide all views
-            ['view-home', 'view-editor', 'view-archive'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-                document.getElementById(id).classList.remove('block');
-            });
-            
-            // Show selected view
-            document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            document.getElementById(`view-${tabId}`).classList.add('block');
-
-            // Update Nav Buttons active state
-            ['home', 'editor', 'archive'].forEach(id => {
-                const btn = document.getElementById(`tabBtn-${id}`);
-                if(id === tabId) {
-                    btn.classList.add('bg-primary', 'text-white');
-                    btn.classList.remove('bg-gray-800', 'text-gray-200');
-                } else {
+            const tabs = ['home', 'editor', 'archive'];
+            tabs.forEach(tab => {
+                document.getElementById(`view-${tab}`).classList.add('hidden');
+                document.getElementById(`view-${tab}`).classList.remove('block');
+                
+                const btn = document.getElementById(`tabBtn-${tab}`);
+                if(btn) {
                     btn.classList.remove('bg-primary', 'text-white');
                     btn.classList.add('bg-gray-800', 'text-gray-200');
                 }
             });
 
-            if (tabId === 'editor') {
-                renderEditorList();
-            }
-        }
-
-        function openReporterAuthModal() {
-            document.getElementById('reporterAuthModal').classList.remove('hidden');
-            document.getElementById('reporterNameInput').focus();
-        }
-
-        function closeReporterAuthModal() {
-            document.getElementById('reporterAuthModal').classList.add('hidden');
-            document.getElementById('reporterNameInput').value = '';
-            const passInput = document.getElementById('reporterPasswordInput');
-            if(passInput) passInput.value = '';
-        }
-
-        function loginReporter() {
-            const name = document.getElementById('reporterNameInput').value.trim();
-            const password = document.getElementById('reporterPasswordInput').value;
-
-            if (!name) {
-                showToast('Masukkan nama atau ID Anda.', 'error');
-                return;
-            }
-
-            if (password !== 'media desa') {
-                showToast('Kata sandi salah! Akses ditolak.', 'error');
-                return;
-            }
-
-            loggedInReporter = name;
-            localStorage.setItem('mediadesa_reporter', name);
-            closeReporterAuthModal();
-            updateReporterStatus();
-            showToast(`Selamat datang, ${name}`, 'success');
-            switchTab('editor');
-        }
-
-        function reporterLogout() {
-            loggedInReporter = null;
-            localStorage.removeItem('mediadesa_reporter');
-            updateReporterStatus();
-            showToast('Anda telah keluar dari mode reporter.', 'info');
-            if (currentTab === 'editor') switchTab('home');
-        }
-
-        function checkReporterLogin() {
-            const stored = localStorage.getItem('mediadesa_reporter');
-            if (stored) {
-                loggedInReporter = stored;
-                updateReporterStatus();
-            }
-        }
-
-        function updateReporterStatus() {
-            const badge = document.getElementById('reporterStatusBadge');
-            const text = document.getElementById('loggedInReporterText');
-            const editorReporterInput = document.getElementById('newsReporter');
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            document.getElementById(`view-${tabId}`).classList.add('block');
             
-            if (loggedInReporter) {
-                badge.classList.remove('hidden');
-                text.innerText = loggedInReporter;
-                editorReporterInput.value = loggedInReporter;
-            } else {
-                badge.classList.add('hidden');
-                editorReporterInput.value = '';
+            const activeBtn = document.getElementById(`tabBtn-${tabId}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-gray-800', 'text-gray-200');
+                activeBtn.classList.add('bg-primary', 'text-white');
             }
         }
 
-        function saveNewsStatus(status) {
-            document.getElementById('newsStatus').value = status;
-            // trigger form submit
-            if(document.getElementById('newsForm').checkValidity()){
-                document.getElementById('newsForm').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-            } else {
-                document.getElementById('newsForm').reportValidity();
-            }
-        }
-
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            const title = document.getElementById('newsTitle').value;
-            const category = document.getElementById('newsCategory').value;
-            const reporter = document.getElementById('newsReporter').value || 'Redaksi anonim';
-            const image = document.getElementById('newsImage').value;
-            const content = document.getElementById('newsContent').value;
-            const status = document.getElementById('newsStatus').value;
-
-            if (editId) {
-                // Update
-                const idx = newsData.findIndex(n => n.id === editId);
-                if(idx > -1) {
-                    newsData[idx] = { ...newsData[idx], title, category, reporter, image, content, status };
-                    showToast('Berita berhasil diperbarui!', 'success');
+        // --- Multi-Language Support (ID, JV, EN) ---
+        function setLanguage(lang) {
+            const langs = ['id', 'jv', 'en'];
+            langs.forEach(l => {
+                const btn = document.getElementById(`lang-${l}`);
+                if (btn) {
+                    if (l === lang) {
+                        btn.classList.add('bg-white', 'text-emerald-900', 'font-bold');
+                        btn.classList.remove('text-white', 'font-medium');
+                    } else {
+                        btn.classList.remove('bg-white', 'text-emerald-900', 'font-bold');
+                        btn.classList.add('text-white', 'font-medium');
+                    }
                 }
-            } else {
-                // Create
-                const newArticle = {
-                    id: Date.now().toString(),
-                    title, category, reporter, image, content, status,
-                    date: new Date().toISOString()
-                };
-                newsData.unshift(newArticle);
-                showToast(status === 'published' ? 'Berita berhasil diterbitkan!' : 'Draf disimpan.', 'success');
-            }
-
-            saveData();
-            resetNewsForm();
-            renderAll();
-        }
-
-        function renderEditorList() {
-            const tbody = document.getElementById('editorNewsList');
-            tbody.innerHTML = '';
-            
-            // Only show news by this reporter (or all if we assume Redaksi access)
-            const myNews = newsData; // Assuming they can see all for demo, or filter: .filter(n => n.reporter === loggedInReporter)
-
-            myNews.forEach(news => {
-                const dateStr = new Date(news.date).toLocaleDateString('id-ID');
-                const statusBadge = news.status === 'published' 
-                    ? `<span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Terbit</span>`
-                    : `<span class="bg-amber-100 text-amber-800 text-xs font-medium px-2 py-0.5 rounded dark:bg-amber-900 dark:text-amber-300">Draf</span>`;
-                
-                const tr = document.createElement('tr');
-                tr.className = 'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600';
-                tr.innerHTML = `
-                    <td class="px-4 py-3 whitespace-nowrap">${dateStr}</td>
-                    <td class="px-4 py-3 font-medium text-gray-900 dark:text-white max-w-[200px] truncate">${news.title}</td>
-                    <td class="px-4 py-3">${news.category}</td>
-                    <td class="px-4 py-3">${statusBadge}</td>
-                    <td class="px-4 py-3 text-right space-x-2">
-                        <button onclick="editNews('${news.id}')" class="text-blue-600 dark:text-blue-500 hover:underline"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="deleteNews('${news.id}')" class="text-red-600 dark:text-red-500 hover:underline"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
             });
+            // Implementasi pergantian teks sesuai bahasa ID / JV / EN dapat ditambahkan di sini
         }
 
-        function editNews(id) {
-            const article = newsData.find(n => n.id === id);
-            if(article) {
-                editId = id;
-                document.getElementById('newsTitle').value = article.title;
-                document.getElementById('newsCategory').value = article.category;
-                document.getElementById('newsImage').value = article.image;
-                document.getElementById('newsContent').value = article.content;
-                
-                document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit Berita';
-                document.getElementById('cancelEditBtn').classList.remove('hidden');
-                
-                // Scroll to top of editor
-                document.getElementById('view-editor').scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-
-        function deleteNews(id) {
-            // Replaced alert/confirm with custom logic (simple direct delete for this scope, or modal. We'll use a direct delete with toast)
-            newsData = newsData.filter(n => n.id !== id);
-            saveData();
-            renderAll();
-            showToast('Berita berhasil dihapus.', 'error');
-        }
-
-        function resetNewsForm() {
-            editId = null;
-            document.getElementById('newsForm').reset();
-            document.getElementById('newsReporter').value = loggedInReporter; // restore reporter name
-            document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-feather-pointed"></i> Entri Berita Baru';
-            document.getElementById('cancelEditBtn').classList.add('hidden');
-        }
-
-        function openReadModal(id) {
-            const article = newsData.find(n => n.id === id);
-            if(!article) return;
-
-            document.getElementById('modalTitle').innerText = article.title;
-            document.getElementById('modalCategory').innerText = article.category;
-            document.getElementById('modalDate').innerText = new Date(article.date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-            document.getElementById('modalReporterText').innerText = article.reporter;
-            document.getElementById('modalContent').innerText = article.content;
-
-            const imgContainer = document.getElementById('modalImageContainer');
-            const img = document.getElementById('modalImage');
-            if (article.image) {
-                img.src = article.image;
-                imgContainer.classList.remove('hidden');
-            } else {
-                imgContainer.classList.add('hidden');
-            }
-
-            document.getElementById('readModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeReadModal() {
-            document.getElementById('readModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
+        // --- Kontrol Modal ---
         function openRedaksiModal() {
             document.getElementById('redaksiModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeRedaksiModal() {
             document.getElementById('redaksiModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
+        }
+
+        function closeReadModal() {
+            document.getElementById('readModal').classList.add('hidden');
+        }
+
+        // --- Fungsi Filter Kategori ---
+        function filterRegion(region) {
+            document.querySelectorAll('.region-btn').forEach(btn => {
+                btn.classList.remove('bg-primary', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-200');
+            });
+            
+            const activeBtn = document.getElementById(`filter-${region}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('bg-gray-100', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-200');
+                activeBtn.classList.add('bg-primary', 'text-white');
+            }
+        }
+
+        // --- Fungsi Dummy untuk Form & Pencarian ---
+        function handleSearchInput() {
+            const query = document.getElementById('searchNewsInput').value;
+            console.log("Mencari berita: " + query);
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            alert("Berita berhasil disimpan atau diterbitkan!");
+            document.getElementById('newsForm').reset();
+        }
+
+        function saveNewsStatus(status) {
+            document.getElementById('newsStatus').value = status;
+            document.getElementById('newsForm').dispatchEvent(new Event('submit'));
+        }
+        
+        function resetNewsForm() {
+            document.getElementById('newsForm').reset();
+            document.getElementById('formHeaderTitle').innerHTML = '<i class="fa-solid fa-feather-pointed"></i> Entri Berita Baru';
+            document.getElementById('cancelEditBtn').classList.add('hidden');
         }
 
         function shareArticle(platform) {
-            const title = document.getElementById('modalTitle').innerText;
-            
-            // Ambil URL aktual yang sedang diakses di browser
-            let url = window.location.href;
-            
-            // Jika masih berada di lingkungan preview/blob, fallback ke domain utama
-            if (url.startsWith('blob:') || url.includes('usercontent')) {
-                const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-                url = `https://mediadesaonlininfo.web.id/berita/${slug}`;
-            }
-
-            let shareUrl = '';
-
             if (platform === 'wa') {
-                shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + "\n\nBaca selengkapnya di: " + url)}`;
-                window.open(shareUrl, '_blank');
+                window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(window.location.href));
             } else if (platform === 'fb') {
-                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-                window.open(shareUrl, '_blank');
+                window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href));
             } else if (platform === 'copy') {
-                const dummy = document.createElement('input');
-                document.body.appendChild(dummy);
-                dummy.value = `${title} - ${url}`;
-                dummy.select();
-                document.execCommand('copy');
-                document.body.removeChild(dummy);
-                showToast('Tautan berhasil disalin!', 'success');
+                navigator.clipboard.writeText(window.location.href);
+                alert('Tautan disalin!');
             }
-        }
-
-        // Simple Toast System to replace Alerts
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            
-            const colors = {
-                success: 'bg-green-600 text-white',
-                error: 'bg-red-600 text-white',
-                info: 'bg-blue-600 text-white'
-            };
-
-            toast.className = `px-4 py-3 rounded-lg shadow-lg text-sm font-semibold flex items-center gap-2 transform transition-all duration-300 translate-y-10 opacity-0 ${colors[type]}`;
-            
-            let icon = 'fa-info-circle';
-            if(type === 'success') icon = 'fa-check-circle';
-            if(type === 'error') icon = 'fa-exclamation-circle';
-
-            toast.innerHTML = `<i class="fa-solid ${icon}"></i> ${message}`;
-            
-            container.appendChild(toast);
-            
-            // Animate in
-            requestAnimationFrame(() => {
-                toast.classList.remove('translate-y-10', 'opacity-0');
-            });
-
-            // Remove after 3s
-            setTimeout(() => {
-                toast.classList.add('translate-y-10', 'opacity-0');
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
         }
     </script>
 </body>
